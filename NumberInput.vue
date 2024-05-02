@@ -47,5 +47,9 @@ watch([() => props.modelValue], () => {
     :disabled="disabled"
     @input="emitUpdate"
     ref="inputRef"
-  />
+  >
+    <template #suffix>
+      <slot name="suffix"></slot>
+    </template>
+  </ElInput>
 </template>
