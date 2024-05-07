@@ -16,6 +16,7 @@ const props = defineProps({
     selectedAbsolute: { type: Boolean, default: false },
     manualSearch: { type: Boolean, default: false },
     autoClear: { type: Boolean, default: false },
+    placeholder: { type: String, default: 'search' },
 })
 
 const page = usePage();
@@ -151,7 +152,7 @@ defineExpose({
         <el-button class="mr-4" size="large" @click="onReset" :icon="Refresh">
             {{ $page.props.langs.reset }}
         </el-button>
-        <el-input ref="search" clearable v-model="props.filters.obj.search" size="large" @input="onKeyWord" v-on:keyup.enter="searchData" placeholder="search">
+        <el-input ref="search" clearable v-model="props.filters.obj.search" size="large" @input="onKeyWord" v-on:keyup.enter="searchData" :placeholder="placeholder">
             <template #prepend>
                 <el-button :icon="Search" @click="searchData" />
             </template>
