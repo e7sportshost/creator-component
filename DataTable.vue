@@ -22,6 +22,7 @@ const props = defineProps({
 const page = usePage();
 const table_key = `${ page.props.routeNameData }_query`;
 const darkMode = localStorage.getItem('darkMode');
+const prefix = page.props.prefix || 'backend';
 
 const setData = () => {
     localStorage.setItem(table_key, JSON.stringify(props.filters.obj));
@@ -87,7 +88,7 @@ const onReset = () => {
     if(props.customReset){
         emit('reset');
     } else {
-        router.get(route(`backend.${page.props.routeNameData}.index`), props.resetData || page.props.parameterData);
+        router.get(route(`${ prefix }.${ page.props.routeNameData }.index`), props.resetData || page.props.parameterData);
     }
 }
 

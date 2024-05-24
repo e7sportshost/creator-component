@@ -20,6 +20,7 @@ const fileData = ref(props.multiple ? null : { url: props.modelValue, name: prop
 
 const dialogImageUrl = ref('')
 const dialogVisible = ref(false)
+const prefix = page.props.prefix || 'backend';
 
 const emit = defineEmits(['update:modelValue', 'updateDelete'])
 
@@ -66,7 +67,7 @@ const handlePictureCardPreview = (uploadFile) => {
             multiple
             :show-file-list="multiple ? true : false"
             :accept="accept"
-            :action="route('backend.upload.store')"
+            :action="route(`${ prefix }.upload.store`)"
             list-type="picture-card"
             :on-preview="handlePictureCardPreview"
             :on-change="onChange"
