@@ -1,5 +1,6 @@
 <script setup>
 import { ref } from 'vue'
+import { router, usePage } from '@inertiajs/vue3'
 import 'element-plus/dist/index.css'
 import { ElUpload, ElButton, ElIcon, ElDialog } from 'element-plus';
 import { Plus } from '@element-plus/icons-vue'
@@ -12,6 +13,7 @@ const props = defineProps({
     listType: { type: String, default: 'picture-card' }, //'text' | 'picture' | 'picture-card'
 })
 
+const page = usePage();
 const upload = ref(null)
 
 const fileList = props.multiple ? props.modelValue?.map(item => ({ id: item.id, name: item.name, url: item.original_url })) : [{ url: props.modelValue, name: props.modelValue }];
