@@ -15,6 +15,7 @@ const props = defineProps({
     route_parameter: { type: Object, default: () => ({  })},
     disabled: { type: Boolean, default: false },
     remote: { type: Boolean, default: false },
+    placeholder: { type: String, default: 'Select' },
 })
 
 const page = usePage();
@@ -75,6 +76,7 @@ watch(() => props.customData, (newValue) => {
       :multiple="multiple"
       :remote="remote"
       :remote-method="loadAjaxData"
+      :placeholder="placeholder"
   >
     <slot name="option" v-bind="props" :data="ajaxData" >
       <ElOption
