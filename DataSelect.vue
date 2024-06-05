@@ -35,6 +35,7 @@ const loadAjaxData = (query) => {
         if(route().has(props.route_name)){
             axios.get(route(props.route_name, { search: query, ...props.route_parameter }), ).then(({ data }) => {
                 ajaxData.value = data;
+                emit('callback', ajaxData.value);
             })
         }
     }
@@ -44,7 +45,6 @@ loadAjaxData(null);
 
 const changeData = (value) => {
     emit('update:modelValue', value);
-    emit('callback', ajaxData.value);
 }
 
 const labelFormat = (item) => {
