@@ -18,7 +18,7 @@ const prefix = page.props.prefix || 'backend';
 <template>
   <Link
     :href="LinkHref || route(`${ prefix }.${ $page.props.routeNameData }.show`, item.id)"
-    v-if="!permissions || (permissions && ($page.props.permissions.includes(`read ${ permissionsData || $page.props.routeNameData }`) || $page.props.auth.user.super_admin))"
+    v-if="!permissions || (route().has(`${ prefix }.${ $page.props.routeNameData }.show`, item.id) && permissions && ($page.props.permissions.includes(`read ${ permissionsData || $page.props.routeNameData }`) || $page.props.auth.user.super_admin))"
     class="inline-block pr-4 duration-100 rounded hover:text-green-600"
   >
     <EyeIcon class="w-6 h-6" />
