@@ -37,7 +37,10 @@ const prefix = page.props.prefix || 'backend';
 
         <template v-else>
             <li class="mr-2">
-                <Link :href="table_id ? route(`${ prefix }.${ table }.edit`, table_id) : route(`${ prefix }.${ table }.create`)" :class="[
+                <Link :href="table_id ?
+                    (route().has(`${ prefix }.${ table }.edit`, table_id) ? route(`${ prefix }.${ table }.edit`, table_id) : '#') :
+                    (route().has(`${ prefix }.${ table }.create`) ? route(`${ prefix }.${ table }.create`) : '#' )"
+                    :class="[
                     action === 'basic_data' ? 'text-blue-600 dark:text-gray-200 border-blue-600 dark:border-gray-200': 'dark:text-gray-500 dark:border-gray-500'
                 ]" class="inline-block p-4 border-b-2 rounded-t-lg active hover:text-blue-600 hover:border-blue-600 dark:hover:text-gray-200 dark:hover:border-gray-200">{{ $page.props.langs.basic_data }}</Link>
             </li>

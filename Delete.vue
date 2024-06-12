@@ -25,7 +25,7 @@ const onDelete = async (id) => {
   <a
     href="#"
     @click="onDelete(item.id)"
-    v-if="!permissions || (permissions && ($page.props.permissions.includes(`delete ${ $page.props.routeNameData }`) || $page.props.auth.user.super_admin))"
+    v-if="!permissions || (route().has(`${ prefix }.${ $page.props.routeNameData }.destroy`, item.id) && permissions && ($page.props.permissions.includes(`delete ${ $page.props.routeNameData }`) || $page.props.auth.user.super_admin))"
     class="inline-block pr-4 text-red-400 duration-100 rounded hover:text-red-600"
   >
       <TrashIcon class="w-6 h-6" />
