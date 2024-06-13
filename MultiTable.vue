@@ -123,7 +123,7 @@ const handleSelectionChange = (val) => {
       :label="column.label"
       :sortable="column.sortable || 'custom'"
       :prop="column.key"
-      :width="column.width"
+      :min-width="column.width"
     >
       <template #header>
         <span>
