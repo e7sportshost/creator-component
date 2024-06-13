@@ -24,7 +24,7 @@ const prefix = page.props.prefix || 'backend';
 
 const dataValue = ref(props.modelValue);
 
-const emit = defineEmits(['update:modelValue', 'callback'])
+const emit = defineEmits(['update:modelValue', 'callback', 'change'])
 
 const ajaxData = ref([]);
 
@@ -44,7 +44,10 @@ const loadAjaxData = (query) => {
 loadAjaxData(null);
 
 const changeData = (value) => {
+    value = value || null;
     emit('update:modelValue', value);
+    let obj = value ? ajaxData.value.find(item => item[props.option_value] == value) : {};
+    emit('change', value, obj);
 }
 
 const labelFormat = (item) => {
