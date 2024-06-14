@@ -15,6 +15,8 @@ const props = defineProps({
     route_parameter: { type: Object, default: () => ({  })},
     disabled: { type: Boolean, default: false },
     remote: { type: Boolean, default: false },
+    placeholder: { type: String, default: 'Select' },
+    size: { type: String, default: '' },
 })
 
 const page = usePage();
@@ -22,7 +24,7 @@ const prefix = page.props.prefix || 'backend';
 
 const dataValue = ref(props.modelValue);
 
-const emit = defineEmits(['update:modelValue', 'callback'])
+const emit = defineEmits(['update:modelValue', 'callback', 'change'])
 
 const ajaxData = ref([]);
 
@@ -33,6 +35,7 @@ const loadAjaxData = (query) => {
         if(route().has(props.route_name)){
             axios.get(route(props.route_name, { search: query, ...props.route_parameter }), ).then(({ data }) => {
                 ajaxData.value = data;
+                emit('callback', ajaxData.value);
             })
         }
     }
@@ -41,8 +44,10 @@ const loadAjaxData = (query) => {
 loadAjaxData(null);
 
 const changeData = (value) => {
+    value = value || null;
     emit('update:modelValue', value);
-    emit('callback', ajaxData.value);
+    let obj = value ? ajaxData.value.find(item => item[props.option_value] == value) : {};
+    emit('change', value, obj);
 }
 
 const labelFormat = (item) => {
@@ -75,6 +80,8 @@ watch(() => props.customData, (newValue) => {
       :multiple="multiple"
       :remote="remote"
       :remote-method="loadAjaxData"
+      :placeholder="placeholder"
+      :size="size"
   >
     <slot name="option" v-bind="props" :data="ajaxData" >
       <ElOption

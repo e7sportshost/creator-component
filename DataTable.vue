@@ -2,8 +2,13 @@
 import { ref } from 'vue'
 import { router, usePage } from '@inertiajs/vue3'
 
-import { ElInput, ElButton, ElTable, ElPagination, ElDialog } from 'element-plus';
+import { ElInput, ElButton, ElTable, ElPagination, ElDialog, ElTableColumn } from 'element-plus';
 import { Search, Refresh, Filter } from '@element-plus/icons-vue'
+
+import Create from '@/Components/Create.vue';
+import Read from '@/Components/Read.vue';
+import Edit from '@/Components/Edit.vue';
+import Delete from '@/Components/Delete.vue';
 
 const props = defineProps({
     data: { type: Object },
@@ -17,9 +22,16 @@ const props = defineProps({
     manualSearch: { type: Boolean, default: false },
     autoClear: { type: Boolean, default: false },
     placeholder: { type: String, default: 'search' },
+
+    option: { type: Boolean, default: true },
+    createBtn: { type: Boolean, default: true },
+    readBtn: { type: Boolean, default: true },
+    editBtn: { type: Boolean, default: true },
+    deleteBtn: { type: Boolean, default: true },
 })
 
 const page = usePage();
+const langs = page.props.langs;
 const table_key = `${ page.props.routeNameData }_query`;
 const darkMode = localStorage.getItem('darkMode');
 const prefix = page.props.prefix || 'backend';
@@ -150,14 +162,15 @@ defineExpose({
 <template>
     <div class="flex mb-2">
         <el-button v-if="advanced" size="large" @click="dialogFormVisible = true" :icon="Filter" plain />
-        <el-button class="mr-4" size="large" @click="onReset" :icon="Refresh">
+        <el-button size="large" @click="onReset" :icon="Refresh">
             {{ $page.props.langs.reset }}
         </el-button>
-        <el-input ref="search" clearable v-model="props.filters.obj.search" size="large" @input="onKeyWord" v-on:keyup.enter="searchData" :placeholder="placeholder">
+        <el-input class="ml-4" ref="search" clearable v-model="props.filters.obj.search" size="large" @input="onKeyWord" v-on:keyup.enter="searchData" :placeholder="placeholder">
             <template #prepend>
                 <el-button :icon="Search" @click="searchData" />
             </template>
         </el-input>
+        <Create v-if="createBtn" class="ml-4" />
     </div>
 
     <template v-if="advanced">
@@ -199,7 +212,16 @@ defineExpose({
         @selection-change="handleSelectionChange"
         :highlight-current-row="selectedHighlight ? false : true"
     >
-            <slot />
+        <slot />
+        <slot name="option">
+            <el-table-column v-if="option" :label="langs.option" fixed="right" width="150">
+                <template #default="scope">
+                    <Read v-if="readBtn" :item="scope.row" />
+                    <Edit v-if="editBtn" :item="scope.row" />
+                    <Delete v-if="deleteBtn" :item="scope.row" />
+                </template>
+            </el-table-column>
+        </slot>
     </el-table>
 
     <el-pagination
