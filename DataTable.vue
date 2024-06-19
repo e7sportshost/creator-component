@@ -163,13 +163,16 @@ defineExpose({
     <div class="flex mb-2">
         <el-button v-if="advanced" size="large" @click="dialogFormVisible = true" :icon="Filter" plain />
         <el-button size="large" @click="onReset" :icon="Refresh">
-            {{ $page.props.langs.reset }}
+            <div class="hidden sm:block">{{ $page.props.langs.reset }}</div>
         </el-button>
         <el-input class="ml-4" ref="search" clearable v-model="props.filters.obj.search" size="large" @input="onKeyWord" v-on:keyup.enter="searchData" :placeholder="placeholder">
             <template #prepend>
                 <el-button :icon="Search" @click="searchData" />
             </template>
         </el-input>
+        <el-button :icon="Search" class="ml-4" size="large" @click="searchData" type="primary">
+            <div class="hidden sm:block sm:m-0">{{ langs.search }}</div>
+        </el-button>
         <Create v-if="createBtn" class="ml-4" />
     </div>
 
