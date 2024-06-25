@@ -9,12 +9,15 @@ import Create from '@/Components/Create.vue';
 import Read from '@/Components/Read.vue';
 import Edit from '@/Components/Edit.vue';
 import Delete from '@/Components/Delete.vue';
+import { row } from 'mathjs';
 
 const props = defineProps({
     data: { type: Object },
-    filters: { type: Object },
+    filters: { type: Object, default: {
+        obj: {}
+    } },
     advanced: { type: Boolean, default: false },
-    resetData: { type: Object },
+    resetData: { type: Object, default: {} },
     customReset: { type: Boolean, default: false },
     refs: { type: Boolean, default: false },
     selectedHighlight: { type: Boolean, default: false },
@@ -28,6 +31,8 @@ const props = defineProps({
     readBtn: { type: Boolean, default: true },
     editBtn: { type: Boolean, default: true },
     deleteBtn: { type: Boolean, default: true },
+    maxHeight: { type: Number, default: 500 },
+    searchBar: { type: Boolean, default: true },
 })
 
 const page = usePage();
@@ -51,7 +56,7 @@ const setting = {
 const dialogFormVisible = ref(false)
 const dataTable = ref(false)
 
-const emit = defineEmits(['search', 'reset', 'selectionChange'])
+const emit = defineEmits(['search', 'reset', 'selectionChange', 'rowClick'])
 
 const onPage = () => {
     onSearch();
@@ -160,7 +165,7 @@ defineExpose({
 </style>
 
 <template>
-    <div class="flex mb-2">
+    <div v-if="searchBar" class="flex mb-2">
         <el-button v-if="advanced" size="large" @click="dialogFormVisible = true" :icon="Filter" plain />
         <el-button size="large" @click="onReset" :icon="Refresh">
             <div class="hidden sm:block">{{ $page.props.langs.reset }}</div>
@@ -207,13 +212,14 @@ defineExpose({
         @sort-change="onSort"
         border
         show-overflow-tooltip
-        height="500"
+        :max-height="maxHeight"
         :row-key="getRowKey"
         :row-class-name="selectedHighlightClassFunc"
         :row-style="selectedHighlightStyleFunc"
         :default-expand-all="false"
         @selection-change="handleSelectionChange"
         :highlight-current-row="selectedHighlight ? false : true"
+        @row-click="row => emit('rowClick', row)"
     >
         <slot />
         <slot name="option">
