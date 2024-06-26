@@ -33,6 +33,7 @@ const props = defineProps({
     deleteBtn: { type: Boolean, default: true },
     maxHeight: { type: Number, default: 500 },
     searchBar: { type: Boolean, default: true },
+    rowClassName: { type: [Function, String] },
 })
 
 const page = usePage();
@@ -214,7 +215,7 @@ defineExpose({
         show-overflow-tooltip
         :max-height="maxHeight"
         :row-key="getRowKey"
-        :row-class-name="selectedHighlightClassFunc"
+        :row-class-name="rowClassName"
         :row-style="selectedHighlightStyleFunc"
         :default-expand-all="false"
         @selection-change="handleSelectionChange"
