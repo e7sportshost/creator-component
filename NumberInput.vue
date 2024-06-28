@@ -48,6 +48,9 @@ watch([() => props.modelValue], () => {
     @input="emitUpdate"
     ref="inputRef"
   >
+    <template #prefix>
+      <slot name="prefix"></slot>
+    </template>
     <template #suffix>
       <slot name="suffix"></slot>
     </template>
