@@ -5,11 +5,15 @@ defineProps({
         type: String,
         default: 'submit',
     },
+    size: {
+        type: String,
+        default: 'default',
+    },
 });
 </script>
 
 <template>
-    <ElButton class="mx-1 mb-4" type="primary" :native-type="type">
+    <ElButton class="mx-1 mb-4" type="primary" :native-type="type" :size="size">
         <slot />
     </ElButton>
 </template>
