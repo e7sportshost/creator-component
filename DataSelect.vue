@@ -17,6 +17,7 @@ const props = defineProps({
     remote: { type: Boolean, default: false },
     placeholder: { type: String, default: 'Select' },
     size: { type: String, default: '' },
+    valueOnClear: { type: String, default: null },
 })
 
 const page = usePage();
@@ -44,7 +45,6 @@ const loadAjaxData = (query) => {
 loadAjaxData(null);
 
 const changeData = (value) => {
-    value = value || null;
     emit('update:modelValue', value);
     let obj = value ? ajaxData.value.find(item => item[props.option_value] == value) : {};
     emit('change', value, obj);
@@ -82,6 +82,7 @@ watch(() => props.customData, (newValue) => {
       :remote-method="loadAjaxData"
       :placeholder="placeholder"
       :size="size"
+      :value-on-clear="valueOnClear"
   >
     <slot name="option" v-bind="props" :data="ajaxData" >
       <ElOption

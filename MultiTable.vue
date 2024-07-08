@@ -1,9 +1,10 @@
 <script setup>
 import { ref, reactive } from 'vue'
-import { usePage } from '@inertiajs/vue3'
+import { usePage, Link } from '@inertiajs/vue3'
 import { ArrowUpCircleIcon, ArrowDownCircleIcon, TrashIcon } from '@heroicons/vue/24/outline'
-import { PlusIcon } from '@heroicons/vue/24/solid'
 import { ElInput, ElTable, ElTableColumn, ElPagination, ElDatePicker, ElCheckbox, ElSwitch } from 'element-plus';
+import { PlusIcon, ClipboardDocumentListIcon } from '@heroicons/vue/24/solid'
+import { Document } from '@element-plus/icons-vue'
 import DateInput from './DateInput.vue';
 import NumberInput from './NumberInput.vue';
 import DataSelect from './DataSelect.vue';
@@ -17,6 +18,7 @@ const props = defineProps({
   disabled: { type: Boolean, default: false },
   pageSize: { type: Number, default: 5 },
   pageSizes: { type: Array, default: [5, 10, 15, 30] },
+  audits: { type: Boolean, default: true },
 })
 
 const state = reactive({
@@ -28,6 +30,7 @@ const state = reactive({
 const multiTable = ref(null);
 
 const page = usePage();
+const prefix = page.props.prefix || 'backend';
 
 //emit
 const emit = defineEmits(['add'])
@@ -172,11 +175,11 @@ const handleSelectionChange = (val) => {
     <el-table-column fixed="right" v-if="!disabled">
         <template #default="scope">
           <ArrowUpCircleIcon
-            class="inline-block h-[1.2rem] text-gray-500 cursor-pointer hover:text-primary-600"
+            class="inline-block h-[1.2rem] text-gray-500 cursor-pointer hover:text-black"
             @click="moveUp(scope.$index)"
           />
           <ArrowDownCircleIcon
-            class="inline-block h-[1.2rem] text-gray-500 cursor-pointer hover:text-primary-600"
+            class="inline-block h-[1.2rem] text-gray-500 cursor-pointer hover:text-black"
             @click="moveDown(scope.$index)"
           />
         </template>
@@ -191,9 +194,18 @@ const handleSelectionChange = (val) => {
         </template>
         <template #default="scope">
           <TrashIcon
-            class="inline-block h-[1.1rem] text-gray-500 cursor-pointer hover:text-danger-600"
+            class="inline-block h-[1.1rem] text-gray-500 cursor-pointer hover:text-black"
             @click="remove(scope.$index)"
           />
+          <Link
+            v-if="scope.row?.id && audits && ($page.props.permissions.includes('read audits') || $page.props.auth.user.super_admin)"
+            :href="route(`${ prefix }.audits.index`, { table: data_key, table_id: scope.row?.id })"
+          >
+            <Document
+              class="inline-block h-[1.1rem] text-gray-500 cursor-pointer hover:text-black"
+            />
+          </Link>
+
         </template>
     </el-table-column>
   </el-table>

@@ -67,6 +67,7 @@ const handlePictureCardPreview = (uploadFile) => {
             ref="upload"
             v-model:file-list="fileList"
             multiple
+            drag
             :show-file-list="multiple ? true : false"
             :accept="accept"
             :action="route(`${ prefix }.upload.store`)"
