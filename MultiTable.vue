@@ -3,9 +3,10 @@ import { ref, reactive } from 'vue'
 import { usePage } from '@inertiajs/vue3'
 import { ArrowUpCircleIcon, ArrowDownCircleIcon, TrashIcon } from '@heroicons/vue/24/outline'
 import { PlusIcon } from '@heroicons/vue/24/solid'
-import { ElInput, ElTable, ElTableColumn, ElPagination, ElDatePicker } from 'element-plus';
+import { ElInput, ElTable, ElTableColumn, ElPagination, ElDatePicker, ElCheckbox, ElSwitch } from 'element-plus';
 import DateInput from './DateInput.vue';
 import NumberInput from './NumberInput.vue';
+import DataSelect from './DataSelect.vue';
 
 const props = defineProps({
   data_key: { type: String },
@@ -137,8 +138,26 @@ const handleSelectionChange = (val) => {
             <ElInput v-model="row[column.key]" :placeholder="column.label" class="w-full" :disabled="disabled || column.disabled || false" />
           </div>
 
+          <div v-if="column.type==='select'">
+            <DataSelect
+              :route_name="column.route_name"
+              v-model="row[column.key]"
+              :placeholder="column.label"
+              :disabled="disabled || column.disabled || false"
+              class="w-full"
+            />
+          </div>
+
           <div v-if="column.type==='date'">
             <DateInput v-model="row[column.key]" :placeholder="column.label" :disabled="disabled || column.disabled || false" />
+          </div>
+
+          <div v-if="column.type==='checkbox'">
+            <ElCheckbox v-model="row[column.key]" :placeholder="column.label" :disabled="disabled || column.disabled || false" />
+          </div>
+
+          <div v-if="column.type==='switch'">
+            <ElSwitch v-model="row[column.key]" :placeholder="column.label" class="w-full" :disabled="disabled || column.disabled || false" />
           </div>
 
           <div v-if="column.type==='number'">
