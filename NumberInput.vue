@@ -9,6 +9,8 @@ const props = defineProps({
   disabled: { type: Boolean, default: false },
   precision: { type: Number, default: 2 },
   separator: { type: Boolean, default: true },
+  min: { type: Number, default: undefined  },
+  max: { type: Number, default: undefined  },
 })
 
 const data = ref(props.modelValue);
@@ -20,6 +22,7 @@ const options = {
   useGrouping: props.separator,
   accountingSign: false,
   precision: props.precision,
+  valueRange: { min: props.min, max: props.max },
 }
 
 const { inputRef, setValue, setOptions } = useCurrencyInput(options, false)
