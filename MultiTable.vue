@@ -125,7 +125,7 @@ const handleSelectionChange = (val) => {
       v-for="(column, index) in props.columns"
       :key="column.key"
       :label="column.label"
-      :sortable="column.sortable || 'custom'"
+      :sortable="column.sortable || false"
       :prop="column.key"
       :min-width="column.width"
     >
