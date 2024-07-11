@@ -11,6 +11,7 @@ const props = defineProps({
     accept: { type: String, default: null },
     autoUpload: { type: Boolean, default: false },
     listType: { type: String, default: 'picture-card' }, //'text' | 'picture' | 'picture-card'
+    disabled: { type: Boolean, default: false },
 })
 
 const page = usePage();
@@ -76,6 +77,7 @@ const handlePictureCardPreview = (uploadFile) => {
             :on-change="onChange"
             :on-remove="onRemove"
             :auto-upload="autoUpload"
+            :disabled="disabled"
         >
             <template v-if="listType == 'picture-card'">
                 <img v-if="fileData" :src="fileData.url" class="avatar" />
