@@ -12,7 +12,9 @@ import Delete from '@/Components/Delete.vue';
 import { row } from 'mathjs';
 
 const props = defineProps({
-    data: { type: Object },
+    data: { type: Object, default: {
+        data: []
+    } },
     filters: { type: Object, default: {
         obj: {}
     } },
