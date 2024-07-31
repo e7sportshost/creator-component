@@ -164,7 +164,7 @@ const handleSelectionChange = (val) => {
           </div>
 
           <div v-if="column.type==='number'">
-            <NumberInput v-model="row[column.key]" :placeholder="column.label" :precision="column.precision" :disabled="disabled || column.disabled || false" />
+            <NumberInput v-model="row[column.key]" :placeholder="column.label" :precision="column.precision || 0" :disabled="disabled || column.disabled || false" />
           </div>
         </slot>
         <p class="text-red-500 text-xs italic" v-if="$page.props.errors[`${ data_key }.${ index }.${ column.key }`]">
