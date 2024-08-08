@@ -173,6 +173,7 @@ defineExpose({
         <el-button size="large" @click="onReset" :icon="Refresh">
             <div class="hidden sm:block">{{ $page.props.langs.reset }}</div>
         </el-button>
+        <slot name="add_search" />
         <el-input class="ml-4" ref="search" clearable v-model="props.filters.obj.search" size="large" @input="onKeyWord" v-on:keyup.enter="searchData" :placeholder="placeholder">
             <template #prepend>
                 <el-button :icon="Search" @click="searchData" />
