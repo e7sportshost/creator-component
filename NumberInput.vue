@@ -11,6 +11,7 @@ const props = defineProps({
   separator: { type: Boolean, default: true },
   min: { type: Number, default: undefined  },
   max: { type: Number, default: undefined  },
+  addClass: { type: String, default: ''  },
 })
 
 const data = ref(props.modelValue);
@@ -42,11 +43,16 @@ watch([() => props.modelValue], () => {
 // })
 </script>
 
+<style scoped>
+  .text-red >>> .el-input__inner {
+    color: red;
+  }
+</style>
 <template>
   <ElInput
     v-model="data"
     :placeholder="placeholder"
-    class="w-full"
+    :class="`w-full ${ addClass }`"
     :disabled="disabled"
     @input="emitUpdate"
     ref="inputRef"
