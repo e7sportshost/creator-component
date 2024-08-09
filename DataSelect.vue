@@ -51,7 +51,9 @@ const changeData = (value) => {
 }
 
 const labelFormat = (item) => {
+    console.log(item, props);
     let tmp = item[props.option_label];
+    console.log(tmp);
 
     if(props.option_label == 'name (no)'){
         tmp = `${ item['name'] } (${ item['no'] })`;
