@@ -14,7 +14,7 @@ const props = defineProps({
     customData: { type: Array },
     route_parameter: { type: Object, default: () => ({  })},
     disabled: { type: Boolean, default: false },
-    remote: { type: Boolean, default: false },
+    remote: { type: Boolean, default: true },
     placeholder: { type: String, default: 'Select' },
     size: { type: String, default: '' },
     valueOnClear: { type: String, default: null },
