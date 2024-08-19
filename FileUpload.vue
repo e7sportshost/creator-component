@@ -19,6 +19,7 @@ const upload = ref(null)
 
 const fileList = props.multiple ? props.modelValue?.map(item => ({ id: item.id, name: item.name, url: item.original_url })) : [{ url: props.modelValue, name: props.modelValue }];
 
+
 const fileData = ref(props.multiple ? null : { url: props.modelValue, name: props.modelValue })
 
 const dialogImageUrl = ref('')
@@ -62,6 +63,12 @@ const handlePictureCardPreview = (uploadFile) => {
 
 </script>
 
+<style scoped>
+::v-deep .el-upload--picture-card{
+    height: auto;
+}
+</style>
+
 <template>
     <template v-if="listType == 'picture-card'">
         <el-upload
@@ -80,7 +87,7 @@ const handlePictureCardPreview = (uploadFile) => {
             :disabled="disabled"
         >
             <template v-if="listType == 'picture-card'">
-                <img v-if="fileData" :src="fileData.url" class="avatar" />
+                <img v-if="fileData && fileData.url" :src="fileData.url" class="avatar" />
                 <el-icon v-else class="avatar-uploader-icon"><Plus /></el-icon>
             </template>
 
