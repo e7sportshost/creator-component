@@ -67,7 +67,6 @@ const modules = {
       :toolbar="toolbar"
       @update:content="emitUpdate"
       style="height: 300px"
-      :modules="modules"
     />
   </div>
 </template>
