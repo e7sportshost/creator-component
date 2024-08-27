@@ -158,6 +158,7 @@ const getRowKey = (row) => {
 
 defineExpose({
   onSearch,
+  onReset,
 });
 </script>
 

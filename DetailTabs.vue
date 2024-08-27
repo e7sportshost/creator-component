@@ -28,11 +28,13 @@ const prefix = page.props.prefix || 'backend';
     <div class="text-sm font-medium text-center text-gray-500 border-b border-gray-200 dark:text-gray-400 dark:border-gray-700">
     <ul class="flex flex-wrap -mb-px">
         <template v-if="add_tabs.length > 0">
-            <li class="mr-2" v-for="(item, key) in add_tabs" :key="key">
-                <Link :href="item.route" :class="[
-                    action === item.action ? 'text-blue-600 dark:text-gray-200 border-blue-600 dark:border-gray-200': 'dark:text-gray-500 dark:border-gray-500'
-                ]" class="inline-block p-4 border-b-2 rounded-t-lg active hover:text-blue-600 hover:border-blue-600 dark:hover:text-gray-200 dark:hover:border-gray-200">{{ item.name }}</Link>
-            </li>
+            <template v-for="(item, key) in add_tabs" :key="key">
+                <li class="mr-2" v-if="$page.props.permissions.includes(`read ${ item.action }`) || $page.props.auth.user.super_admin">
+                    <Link :href="item.route" :class="[
+                        action === item.action ? 'text-blue-600 dark:text-gray-200 border-blue-600 dark:border-gray-200': 'dark:text-gray-500 dark:border-gray-500'
+                    ]" class="inline-block p-4 border-b-2 rounded-t-lg active hover:text-blue-600 hover:border-blue-600 dark:hover:text-gray-200 dark:hover:border-gray-200">{{ item.name }}</Link>
+                </li>
+            </template>
         </template>
 
         <template v-else>
