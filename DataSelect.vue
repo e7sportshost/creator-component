@@ -83,6 +83,7 @@ watch(() => props.customData, (newValue) => {
       :placeholder="placeholder"
       :size="size"
       :value-on-clear="valueOnClear"
+      default-first-option
   >
     <slot name="option" v-bind="props" :data="ajaxData" >
       <ElOption

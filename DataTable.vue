@@ -18,6 +18,7 @@ const props = defineProps({
     filters: { type: Object, default: {
         obj: {}
     } },
+    history: { type: Boolean, default: true },
     advanced: { type: Boolean, default: false },
     resetData: { type: Object, default: {} },
     customReset: { type: Boolean, default: false },
@@ -45,7 +46,11 @@ const darkMode = localStorage.getItem('darkMode');
 const prefix = page.props.prefix || 'backend';
 
 const setData = () => {
-    localStorage.setItem(table_key, JSON.stringify(props.filters.obj));
+    if(props.history){
+        localStorage.setItem(table_key, JSON.stringify(props.filters.obj));
+    }else{
+        localStorage.removeItem(table_key);
+    }
 }
 
 setData();
