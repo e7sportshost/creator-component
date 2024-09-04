@@ -1,8 +1,8 @@
 <script setup>
 import { ref, watch } from 'vue';
-import { QuillEditor, Delta } from '@vueup/vue-quill'
+import { QuillEditor } from '@vueup/vue-quill'
 import 'quill/dist/quill.snow.css';
-import ImageUploader from 'quill-image-uploader';
+// import ImageUploader from 'quill-image-uploader';
 import axios from 'axios';
 
 const props = defineProps({
@@ -34,27 +34,27 @@ const emitUpdate = (value) => {
   emit('update:modelValue', myEditor.value.getHTML());
 };
 
-const modules = {
-  name: 'imageUploader',
-  module: ImageUploader,
-  options: {
-    upload: file => {
-      return new Promise((resolve, reject) => {
-        const formData = new FormData();
-        formData.append("image", file);
+// const modules = {
+//   name: 'imageUploader',
+//   module: ImageUploader,
+//   options: {
+//     upload: file => {
+//       return new Promise((resolve, reject) => {
+//         const formData = new FormData();
+//         formData.append("image", file);
 
-        axios.post(route('backend.upload.store'), formData)
-        .then(res => {
-          resolve(res.data);
-        })
-        .catch(err => {
-          reject("Upload failed");
-          console.error("Error:", err)
-        })
-      })
-    }
-  }
-}
+//         axios.post(route('backend.upload.store'), formData)
+//         .then(res => {
+//           resolve(res.data);
+//         })
+//         .catch(err => {
+//           reject("Upload failed");
+//           console.error("Error:", err)
+//         })
+//       })
+//     }
+//   }
+// }
 </script>
 
 <template>

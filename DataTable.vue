@@ -9,7 +9,6 @@ import Create from '@/Components/Create.vue';
 import Read from '@/Components/Read.vue';
 import Edit from '@/Components/Edit.vue';
 import Delete from '@/Components/Delete.vue';
-import { row } from 'mathjs';
 
 const props = defineProps({
     data: { type: Object, default: {
