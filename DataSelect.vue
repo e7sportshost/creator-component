@@ -24,6 +24,9 @@ const page = usePage();
 const prefix = page.props.prefix || 'backend';
 
 const dataValue = ref(props.modelValue);
+if(props.multiple && dataValue.value == null){
+    dataValue.value = [];
+}
 
 const emit = defineEmits(['update:modelValue', 'callback', 'change'])
 
@@ -83,7 +86,6 @@ watch(() => props.customData, (newValue) => {
       :placeholder="placeholder"
       :size="size"
       :value-on-clear="valueOnClear"
-      default-first-option
   >
     <slot name="option" v-bind="props" :data="ajaxData" >
       <ElOption
