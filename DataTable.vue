@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { router, usePage } from '@inertiajs/vue3'
 
 import { ElInput, ElButton, ElTable, ElPagination, ElDialog, ElTableColumn } from 'element-plus';
@@ -41,7 +41,6 @@ const props = defineProps({
 const page = usePage();
 const langs = page.props.langs;
 const table_key = `${ page.props.routeNameData }_query`;
-const darkMode = localStorage.getItem('darkMode');
 const prefix = page.props.prefix || 'backend';
 
 const setData = () => {
