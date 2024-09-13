@@ -3,6 +3,7 @@ import { ref, watch } from "vue";
 import { usePage } from '@inertiajs/vue3'
 import { ElSelect, ElOption } from 'element-plus';
 import axios from 'axios';
+import { useDataCacheStore } from './SelectCache'; // 引入store
 
 const props = defineProps({
     modelValue: { type: [Number, Array, String] },
@@ -23,6 +24,8 @@ const props = defineProps({
 const page = usePage();
 const prefix = page.props.prefix || 'backend';
 
+const cacheStore = useDataCacheStore();
+
 const dataValue = ref(props.modelValue);
 if(props.multiple && dataValue.value == null){
     dataValue.value = [];
@@ -37,10 +40,24 @@ const loadAjaxData = (query) => {
         ajaxData.value = props.customData;
     }else{
         if(route().has(props.route_name)){
-            axios.get(route(props.route_name, { search: query, ...props.route_parameter }), ).then(({ data }) => {
-                ajaxData.value = data;
+            const cacheKey = JSON.stringify({ route_name: props.route_name, query, data: { ...props.route_parameter } });
+            // 从 Pinia 的缓存中获取数据
+            const cachedData = cacheStore.getData(cacheKey);
+            // const cachedData = {};
+            console.log(cachedData, cacheKey);
+
+            if (cachedData) {
+                ajaxData.value = cachedData;
+
                 emit('callback', ajaxData.value);
-            })
+            }else{
+                axios.get(route(props.route_name, { search: query, ...props.route_parameter }), ).then(({ data }) => {
+                    ajaxData.value = data;
+
+                    cacheStore.setData(cacheKey, data);
+                    emit('callback', ajaxData.value);
+                })
+            }
         }
     }
 }
