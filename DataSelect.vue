@@ -44,7 +44,7 @@ const loadAjaxData = (query) => {
             // 从 Pinia 的缓存中获取数据
             const cachedData = cacheStore.getData(cacheKey);
             // const cachedData = {};
-            console.log(cachedData, cacheKey);
+            console.log(cacheStore.dataCache, cacheKey);
 
             if (cachedData) {
                 ajaxData.value = cachedData;
