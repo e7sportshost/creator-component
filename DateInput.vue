@@ -29,7 +29,6 @@ watch([() => props.modelValue], () => {
 <template>
     <ElDatePicker
       v-model="data"
-      value-format="YYYY-MM-DD"
       :placeholder="placeholder"
       class="!w-full"
       :disabled="disabled"

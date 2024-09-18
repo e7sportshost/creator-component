@@ -58,7 +58,9 @@ watch([() => props.modelValue], () => {
     ref="inputRef"
   >
     <template #prefix>
-      <slot name="prefix"></slot>
+      <span class="ml-2">
+        <slot name="prefix"></slot>
+      </span>
     </template>
     <template #suffix>
       <slot name="suffix"></slot>
