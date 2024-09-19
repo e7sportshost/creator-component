@@ -12,6 +12,7 @@ const props = defineProps({
     autoUpload: { type: Boolean, default: false },
     listType: { type: String, default: 'picture-card' }, //'text' | 'picture' | 'picture-card'
     disabled: { type: Boolean, default: false },
+    class: { type: String, default: null },
 })
 
 const page = usePage();
@@ -67,6 +68,9 @@ const handlePictureCardPreview = (uploadFile) => {
 ::v-deep .el-upload--picture-card{
     height: auto;
 }
+.w-full >>> .el-upload{
+    width: 100%;
+}
 </style>
 
 <template>
@@ -85,6 +89,7 @@ const handlePictureCardPreview = (uploadFile) => {
             :on-remove="onRemove"
             :auto-upload="autoUpload"
             :disabled="disabled"
+            :class="class"
         >
             <template v-if="listType == 'picture-card'">
                 <img v-if="fileData && fileData.url" :src="fileData.url" class="avatar" />

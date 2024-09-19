@@ -88,6 +88,10 @@ watch(() => props.customData, (newValue) => {
       :size="size"
       :value-on-clear="valueOnClear"
   >
+    <template #prefix>
+        <slot name="prefix"></slot>
+    </template>
+
     <slot name="option" v-bind="props" :data="ajaxData" >
       <ElOption
           v-for="item in ajaxData"
