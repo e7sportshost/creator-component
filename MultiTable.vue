@@ -116,7 +116,10 @@ const handleSelectionChange = (val) => {
     :default-expand-all="false"
     @selection-change="handleSelectionChange"
   >
-    <el-table-column  label="#" type="index" prop="id" width="35">
+    <el-table-column  label="#" prop="id" width="35">
+        <template #default="scope">
+            <span>{{ scope.$index + 1 }}</span>
+        </template>
     </el-table-column>
     <el-table-column
       v-for="(column, index) in props.columns"
@@ -125,13 +128,14 @@ const handleSelectionChange = (val) => {
       :sortable="column.sortable || false"
       :prop="column.key"
       :min-width="column.width"
-      :type="column.rowType || default"
     >
-      <template #header>
-        <span>
-          {{ column.label }}
-          <span v-if="column.required" class="text-red-500">*</span>
-        </span>
+      <template #header="{ row }">
+        <slot :name="'header_cell('+column.key+')'" :item="row" :index="index" :column="column" :disabled="disabled || column.disabled || false">
+          <span>
+            {{ column.label }}
+            <span v-if="column.required" class="text-red-500">*</span>
+          </span>
+        </slot>
       </template>
       <template #default="{ row }">
         <slot :name="'cell('+column.key+')'" :item="row" :index="index" :column="column" :disabled="disabled || column.disabled || false">
