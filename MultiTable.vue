@@ -150,6 +150,7 @@ const handleSelectionChange = (val) => {
               :placeholder="column.label"
               :disabled="disabled || column.disabled || false"
               class="w-full"
+              :option_label="column.option_label || 'name'"
             />
           </div>
 
