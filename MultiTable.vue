@@ -39,10 +39,23 @@ const prefix = page.props.prefix || 'backend';
 //emit
 const emit = defineEmits(['add'])
 
+const getNestedValue = (obj, key) => {
+  return key.split('.').reduce((o, i) => {
+    return (o ? o[i] : null)
+  }, obj);
+}
+
 const tableData = () => {
-  return props.data.filter((item, index) => {
+  let data = props.data.filter((item, index) => {
     return index >= (state.page - 1) * state.rows && index < state.page * state.rows
-  })
+  }).map(row => {
+    return props.columns.reduce((acc, column) => {
+      acc[column.key] = getNestedValue(row, column.key);
+      return acc;
+    }, { ...row });
+  });
+
+  return data
 }
 
 const add = () => {
