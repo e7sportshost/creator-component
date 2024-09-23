@@ -12,10 +12,10 @@ export const useDataCacheStore = defineStore('dataCache', () => {
         dataCache.value[cacheKey] = data;
     }
     // 获取缓存
-    const getData = (query, props) => {
+    const getData = (query, props, cache = false) => {
         const cacheKey = JSON.stringify({ route_name: props.route_name, query, data: { ...props.route_parameter } });
 
-        if (dataCache.value[cacheKey]) {
+        if (dataCache.value[cacheKey] && cache) {
             return new Promise((resolve, reject)=>{
                 resolve(dataCache.value[cacheKey])
             })

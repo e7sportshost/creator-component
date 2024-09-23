@@ -35,18 +35,18 @@ const emit = defineEmits(['update:modelValue', 'callback', 'change'])
 
 const ajaxData = ref([]);
 
-const loadAjaxData = async (query) => {
+const loadAjaxData = async (query, cache = false) => {
     if(props.customData){
         ajaxData.value = props.customData;
     }else{
         if(route().has(props.route_name)){
-            ajaxData.value = await cacheStore.getData(query, props);
+            ajaxData.value = await cacheStore.getData(query, props, cache);
         }
     }
     emit('callback', ajaxData.value);
 }
 
-loadAjaxData(null);
+loadAjaxData(null, true);
 
 const changeData = (value) => {
     emit('update:modelValue', value);
