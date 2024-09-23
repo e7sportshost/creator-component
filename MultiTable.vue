@@ -48,12 +48,7 @@ const getNestedValue = (obj, key) => {
 const tableData = () => {
   let data = props.data.filter((item, index) => {
     return index >= (state.page - 1) * state.rows && index < state.page * state.rows
-  }).map(row => {
-    return props.columns.reduce((acc, column) => {
-      acc[column.key] = getNestedValue(row, column.key);
-      return acc;
-    }, { ...row });
-  });
+  })
 
   return data
 }
