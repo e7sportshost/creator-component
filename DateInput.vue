@@ -10,7 +10,8 @@ const props = defineProps({
   startPlaceholder: { type: String, default: '' },
   endPlaceholder: { type: String, default: '' },
   rangeSeparator: { type: String, default: 'To' },
-  disabledDate: { type: Function, default: () => false }
+  disabledDate: { type: Function, default: () => false },
+  valueFormat: { type: String, default: 'YYYY-MM-DD' },
 })
 
 const emit = defineEmits(['update:modelValue'])
@@ -33,6 +34,7 @@ watch([() => props.modelValue], () => {
       class="!w-full"
       :disabled="disabled"
       :type="type"
+      :value-format="valueFormat"
       @change="emitUpdate"
       :range-separator="rangeSeparator"
       :start-placeholder="startPlaceholder"
