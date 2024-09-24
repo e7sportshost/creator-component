@@ -28,6 +28,8 @@ const onDelete = async (id) => {
     v-if="!permissions || (route().has(`${ prefix }.${ $page.props.routeNameData }.destroy`, item.id) && permissions && ($page.props.permissions.includes(`delete ${ $page.props.routeNameData }`) || $page.props.auth.user.super_admin))"
     class="inline-block pr-4 text-red-400 duration-100 rounded hover:text-red-600"
   >
+    <slot>
       <TrashIcon class="w-6 h-6" />
+    </slot>
   </a>
 </template>

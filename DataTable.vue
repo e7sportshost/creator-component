@@ -36,6 +36,7 @@ const props = defineProps({
     maxHeight: { type: Number, default: 500 },
     searchBar: { type: Boolean, default: true },
     rowClassName: { type: [Function, String] },
+    defaultExpandAll: { type: Boolean, default: false },
 })
 
 const page = usePage();
@@ -228,6 +229,7 @@ defineExpose({
         @selection-change="handleSelectionChange"
         :highlight-current-row="selectedHighlight ? false : true"
         @row-click="row => emit('rowClick', row)"
+        defaultExpandAll
     >
         <slot />
         <slot name="option">

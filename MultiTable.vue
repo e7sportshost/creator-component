@@ -13,7 +13,11 @@ const props = defineProps({
   data_key: { type: String },
   columns: { type: Array },
   data: { type: Array, default: [] },
-  add_data: { type: Boolean, default: true },
+  addShow: { type: Boolean, default: true },
+  moveShow: { type: Boolean, default: true },
+  trashShow: { type: Boolean, default: true },
+  optionShow: { type: Boolean, default: true },
+  auditsShow: { type: Boolean, default: true },
   max_height: { type: Number, default: 500 },
   disabled: { type: Boolean, default: false },
   pageSize: { type: Number, default: 5 },
@@ -35,10 +39,18 @@ const prefix = page.props.prefix || 'backend';
 //emit
 const emit = defineEmits(['add'])
 
+const getNestedValue = (obj, key) => {
+  return key.split('.').reduce((o, i) => {
+    return (o ? o[i] : null)
+  }, obj);
+}
+
 const tableData = () => {
-  return props.data.filter((item, index) => {
+  let data = props.data.filter((item, index) => {
     return index >= (state.page - 1) * state.rows && index < state.page * state.rows
   })
+
+  return data
 }
 
 const add = () => {
@@ -175,7 +187,7 @@ const handleSelectionChange = (val) => {
         </p>
       </template>
     </el-table-column>
-    <el-table-column fixed="right" v-if="!disabled">
+    <el-table-column fixed="right" v-if="!disabled && moveShow">
         <template #default="scope">
           <ArrowUpCircleIcon
             class="inline-block h-[1.2rem] text-gray-500 cursor-pointer hover:text-black"
@@ -187,21 +199,22 @@ const handleSelectionChange = (val) => {
           />
         </template>
     </el-table-column>
-    <el-table-column fixed="right" v-if="!disabled">
+    <el-table-column fixed="right" v-if="!disabled && optionShow">
         <template #header>
           <PlusIcon
-            v-if="add_data"
+            v-if="addShow"
             class="inline-block h-4 -mt-1 text-danger-500 cursor-pointer hover:bg-gray-200 hover:rounded-full"
             @click="add"
           />
         </template>
         <template #default="scope">
           <TrashIcon
+            v-if="trashShow"
             class="inline-block h-[1.1rem] text-gray-500 cursor-pointer hover:text-black"
             @click="remove(scope.$index)"
           />
           <Link
-            v-if="scope.row?.id && audits && ($page.props.permissions.includes('read audits') || $page.props.auth.user.super_admin)"
+            v-if="scope.row?.id && auditsShow && ($page.props.permissions.includes('read audits') || $page.props.auth.user.super_admin)"
             :href="route(`${ prefix }.audits.index`, { table: data_key, table_id: scope.row?.id })"
           >
             <Document
