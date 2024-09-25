@@ -19,6 +19,7 @@ const props = defineProps({
     placeholder: { type: String, default: 'Select' },
     size: { type: String, default: '' },
     valueOnClear: { type: String, default: null },
+    maxCollapseTags: { type: Number, default: 1 },
 })
 
 const page = usePage();
@@ -87,6 +88,9 @@ watch(() => props.customData, (newValue) => {
       :placeholder="placeholder"
       :size="size"
       :value-on-clear="valueOnClear"
+      collapse-tags
+      collapse-tags-tooltip
+      :max-collapse-tags="maxCollapseTags"
   >
     <template #prefix>
         <slot name="prefix"></slot>
