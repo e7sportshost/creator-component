@@ -229,7 +229,7 @@ defineExpose({
         @selection-change="handleSelectionChange"
         :highlight-current-row="selectedHighlight ? false : true"
         @row-click="row => emit('rowClick', row)"
-        defaultExpandAll
+        :defaultExpandAll="defaultExpandAll"
     >
         <slot />
         <slot name="option">
