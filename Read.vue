@@ -2,6 +2,7 @@
 <script setup>
 import { Link, usePage } from '@inertiajs/vue3'
 import { EyeIcon } from "@heroicons/vue/24/solid"
+import CheckPermissions from './CheckPermissions';
 
 const props = defineProps({
   item: { type: Object },
@@ -18,7 +19,7 @@ const prefix = page.props.prefix || 'backend';
 
 <template>
   <template
-    v-if="!permissions || (route().has(`${ prefix }.${ $page.props.routeNameData }.show`, item.id) && permissions && ($page.props.permissions.includes(`read ${ permissionsData || $page.props.routeNameData }`) || $page.props.auth.user.super_admin))"
+    v-if="!permissions || permissions && CheckPermissions(`${ prefix }.${ $page.props.routeNameData }.show`, `read ${ $page.props.routeNameData }`, item)"
   >
     <Link
       v-if="link"

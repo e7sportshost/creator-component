@@ -1,6 +1,7 @@
 <script setup>
 import { Link, usePage } from '@inertiajs/vue3'
 import { PencilSquareIcon } from "@heroicons/vue/24/solid"
+import CheckPermissions from './CheckPermissions';
 
 const props = defineProps({
   item: { type: Object },
@@ -17,7 +18,7 @@ const prefix = page.props.prefix || 'backend';
 
 <template>
   <template
-    v-if="!permissions || (route().has(`${ prefix }.${ $page.props.routeNameData }.edit`, item.id) && permissions && ($page.props.permissions.includes(`edit ${ permissionsData || $page.props.routeNameData }`) || $page.props.auth.user.super_admin))"
+    v-if="!permissions || permissions && CheckPermissions(`${ prefix }.${ $page.props.routeNameData }.edit`, `edit ${ $page.props.routeNameData }`, item)"
   >
     <Link
       v-if="link"

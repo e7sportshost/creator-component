@@ -3,6 +3,7 @@
 import { Link, usePage } from '@inertiajs/vue3'
 import { ElButton } from 'element-plus';
 import { Plus } from '@element-plus/icons-vue'
+import CheckPermissions from './CheckPermissions';
 
 const props = defineProps({
   LinkHref: { type: String, default: null },
@@ -16,7 +17,7 @@ const prefix = page.props.prefix || 'backend';
 
 <template>
   <template
-    v-if="route().has(`${ prefix }.${ $page.props.routeNameData }.create`) && ( $page.props.permissions.includes(`create ${ $page.props.routeNameData }`) || $page.props.auth.user.super_admin )"
+    v-if="CheckPermissions(`${ prefix }.${ $page.props.routeNameData }.create`, `create ${ $page.props.routeNameData }`)"
   >
     <Link
       v-if="link"
