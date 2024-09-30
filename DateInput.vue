@@ -34,7 +34,7 @@ watch([() => props.modelValue], () => {
       class="!w-full"
       :disabled="disabled"
       :type="type"
-      :value-format="valueFormat"
+      :value-format="type == 'datetimerange' ? 'YYYY-MM-DD HH:mm:ss' : valueFormat"
       @change="emitUpdate"
       :range-separator="rangeSeparator"
       :start-placeholder="startPlaceholder"
