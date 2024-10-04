@@ -13,6 +13,7 @@ const props = defineProps({
     listType: { type: String, default: 'picture-card' }, //'text' | 'picture' | 'picture-card'
     disabled: { type: Boolean, default: false },
     class: { type: String, default: null },
+    textInfo: { type: String, default: null }
 })
 
 const page = usePage();
@@ -109,12 +110,14 @@ const handlePictureCardPreview = (uploadFile) => {
 
     <template v-if="listType == 'text'">
         <input
-            class="block w-full text-sm text-gray-900 border border-gray-300 rounded cursor-pointer dark:text-gray-400 focus:outline-none dark:border-gray-600 dark:placeholder-gray-400"
+            class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
             id="file_input"
             :accept="accept"
             type="file"
             multiple
             @change="TextChange"
         >
+        <p v-if="textInfo" class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">{{ textInfo }}</p>
+
     </template>
 </template>
