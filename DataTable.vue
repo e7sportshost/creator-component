@@ -37,6 +37,9 @@ const props = defineProps({
     searchBar: { type: Boolean, default: true },
     rowClassName: { type: [Function, String] },
     defaultExpandAll: { type: Boolean, default: false },
+    showSummary: { type: Boolean, default: false },
+    summaryMethod: { type: Function },
+    sumText: { type: String, default: 'sum' },
 })
 
 const page = usePage();
@@ -230,6 +233,9 @@ defineExpose({
         :highlight-current-row="selectedHighlight ? false : true"
         @row-click="row => emit('rowClick', row)"
         :defaultExpandAll="defaultExpandAll"
+        :show-summary="showSummary"
+        :summary-method="summaryMethod"
+        :sum-text="$page.props.langs[sumText]"
     >
         <slot />
         <slot name="option">
