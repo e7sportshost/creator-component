@@ -12,6 +12,10 @@ const props = defineProps({
   rangeSeparator: { type: String, default: 'To' },
   disabledDate: { type: Function, default: () => false },
   valueFormat: { type: String, default: 'YYYY-MM-DD' },
+  defaultTime: { type: Array, default: [
+    new Date(2000, 1, 1, 0, 0, 0),
+    new Date(2000, 2, 1, 23, 59, 59),
+  ] },
 })
 
 const emit = defineEmits(['update:modelValue'])
@@ -25,6 +29,7 @@ const emitUpdate = (value) => {
 watch([() => props.modelValue], () => {
   data.value = props.modelValue;
 })
+
 </script>
 
 <template>
@@ -35,6 +40,7 @@ watch([() => props.modelValue], () => {
       :disabled="disabled"
       :type="type"
       :value-format="type == 'datetimerange' ? 'YYYY-MM-DD HH:mm:ss' : valueFormat"
+      :default-time="defaultTime"
       @change="emitUpdate"
       :range-separator="rangeSeparator"
       :start-placeholder="startPlaceholder"
