@@ -25,7 +25,7 @@ const prefix = page.props.prefix || 'backend';
       class="ml-4"
     >
       <ElButton :icon="Plus" type="success" size="large">
-          <div class="hidden sm:block sm:m-0">{{ $page.props.langs.create }}</div>
+          <div class="hidden sm:block sm:m-0">{{ $page.props.langs[$page.props.routeNameData]?.create || $page.props.langs.create }}</div>
       </ElButton>
     </Link>
 
@@ -33,7 +33,7 @@ const prefix = page.props.prefix || 'backend';
       v-else
     >
       <ElButton :icon="Plus" type="success" size="large">
-          <div class="hidden sm:block sm:m-0">{{ $page.props.langs.create }}</div>
+          <div class="hidden sm:block sm:m-0">{{ $page.props.langs[$page.props.routeNameData]?.create || $page.props.langs.create }}</div>
       </ElButton>
     </div>
   </template>
