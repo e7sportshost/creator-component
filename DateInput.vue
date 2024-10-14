@@ -5,6 +5,8 @@ import { ElDatePicker } from 'element-plus';
 import dayjs from 'dayjs';
 import isoWeek from 'dayjs/plugin/isoWeek';
 
+dayjs.extend(isoWeek)
+
 const props = defineProps({
   modelValue: { type: [String, Array] },
   placeholder: { type: String },
