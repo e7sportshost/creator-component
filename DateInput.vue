@@ -1,6 +1,9 @@
 <script setup>
 import { ref, watch } from 'vue';
+import { router, usePage } from '@inertiajs/vue3'
 import { ElDatePicker } from 'element-plus';
+import dayjs from 'dayjs';
+import isoWeek from 'dayjs/plugin/isoWeek';
 
 const props = defineProps({
   modelValue: { type: [String, Array] },
@@ -16,9 +19,69 @@ const props = defineProps({
     new Date(2000, 1, 1, 0, 0, 0),
     new Date(2000, 2, 1, 23, 59, 59),
   ] },
+
+  shortcuts: { type: Array, default: [
+    {
+      text: 'today',
+      value: () => {
+        return [
+          dayjs().startOf('day'),
+          dayjs().endOf('day')
+        ]
+      },
+    },
+    {
+      text: 'yesterday',
+      value: () => {
+        return [
+          dayjs().subtract(1, 'day').startOf('day'),
+          dayjs().subtract(1, 'day').endOf('day')
+        ]
+      },
+    },
+    {
+      text: 'this_week',
+      value: () => {
+        return [
+          dayjs().isoWeekday('1').startOf('day'),
+          dayjs().isoWeekday('7').endOf('day')
+        ]
+      },
+    },
+    {
+      text: 'last_week',
+      value: () => {
+        return [
+          dayjs().subtract(1, 'week').isoWeekday('1').startOf('day'),
+          dayjs().subtract(1, 'week').isoWeekday('7').endOf('day')
+        ]
+      },
+    },
+    {
+      text: 'this_month',
+      value: () => {
+        return [
+          dayjs().startOf('month'),
+          dayjs().endOf('month')
+        ]
+      },
+    },
+    {
+      text: 'last_month',
+      value: () => {
+        return [
+          dayjs().subtract(1, 'month').startOf('month'),
+          dayjs().subtract(1, 'month').endOf('month')
+        ]
+      },
+    },
+  ] },
 })
 
-const emit = defineEmits(['update:modelValue'])
+const page = usePage();
+const langs = page.props.langs;
+
+const emit = defineEmits(['update:modelValue', 'visibleChange'])
 
 const data = ref(props.modelValue);
 
@@ -29,6 +92,10 @@ const emitUpdate = (value) => {
 watch([() => props.modelValue], () => {
   data.value = props.modelValue;
 })
+
+const visibleChange = (value) => {
+  emit('visibleChange', value);
+}
 
 </script>
 
@@ -46,5 +113,10 @@ watch([() => props.modelValue], () => {
       :start-placeholder="startPlaceholder"
       :end-placeholder="endPlaceholder"
       :disabled-date="disabledDate"
+      :shortcuts="shortcuts.map(item => {
+        item.text = langs[item.text] || item.text;
+        return item;
+      })"
+      @visible-change="visibleChange"
     />
 </template>
