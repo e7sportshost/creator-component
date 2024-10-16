@@ -75,7 +75,7 @@ search();
   </label>
 
   <el-dialog v-model="dialogTableVisible" :title="$page.props.langs.search_data_images">
-    <DataTable :data="dataImagesData" @search="search" :filters="filters" @reset="reset" :placeholder="search_data?.map(item => langs[routeNameData][item]).join(' / ')" customReset @selectionChange="selectionChange">
+    <DataTable :data="dataImagesData" @search="search" :filters="filters" @reset="reset" :placeholder="search_data?.map(item => langs[routeNameData][item]).join(' / ')" customReset @selectionChange="selectionChange" :manualSearch="true">
       <el-table-column label="#" type="selection" sortable="custom" prop="id" :reserve-selection="true" />
       <el-table-column :label="$page.props.langs.data_images.name" sortable="custom" prop="name" />
       <el-table-column :label="$page.props.langs.data_images.image" width="500" prop="image">
