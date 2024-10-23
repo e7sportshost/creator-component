@@ -149,7 +149,7 @@ const handleSelectionChange = (val) => {
           </span>
         </slot>
       </template>
-      <template #default="{ row }">
+      <template #default="{ row, $index }">
         <slot :name="'cell('+column.key+')'" :item="row" :index="index" :column="column" :disabled="disabled || column.disabled || false">
           <div v-if="column.type==='input'">
             <ElInput v-model="row[column.key]" :placeholder="column.label" class="w-full" :disabled="disabled || column.disabled || false" />
@@ -182,8 +182,8 @@ const handleSelectionChange = (val) => {
             <NumberInput v-model="row[column.key]" :placeholder="column.label" :precision="column.precision || 0" :disabled="disabled || column.disabled || false" />
           </div>
         </slot>
-        <p class="text-red-500 text-xs italic" v-if="$page.props.errors[`${ data_key }.${ index }.${ column.key }`]">
-          {{ $page.props.errors[`${ data_key }.${ index }.${ column.key }`] }}
+        <p class="text-red-500 text-xs italic" v-if="$page.props.errors[`${ data_key }.${ $index }.${ column.key }`]">
+          {{ $page.props.errors[`${ data_key }.${ $index }.${ column.key }`] }}
         </p>
       </template>
     </el-table-column>
