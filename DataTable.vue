@@ -48,12 +48,12 @@ const langs = page.props.langs;
 const table_key = `${ page.props.routeNameData }_query`;
 const prefix = page.props.prefix || 'backend';
 
-const setData = () => {
+const setData = (checkPage) => {
     if(props.banHistory){
         return;
     }
     if(props.history){
-        if(page.props.query.page){
+        if(!checkPage || (checkPage && page.props.query.page)){
             localStorage.setItem(table_key, JSON.stringify(props.filters.obj));
         }
     }else{
@@ -61,7 +61,7 @@ const setData = () => {
     }
 }
 
-setData();
+setData(true);
 
 const setting = {
     replace: true,
@@ -108,7 +108,7 @@ const searchData = () => {
 }
 
 const onSearch = () => {
-    setData();
+    setData(false);
     emit('search', setting);
     if(props.autoClear){
         props.filters.obj.search = '';
