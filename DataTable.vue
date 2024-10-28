@@ -18,6 +18,7 @@ const props = defineProps({
         obj: {}
     } },
     history: { type: Boolean, default: true },
+    banHistory: { type: Boolean, default: false },
     advanced: { type: Boolean, default: false },
     resetData: { type: Object, default: {} },
     customReset: { type: Boolean, default: false },
@@ -48,6 +49,9 @@ const table_key = `${ page.props.routeNameData }_query`;
 const prefix = page.props.prefix || 'backend';
 
 const setData = () => {
+    if(props.banHistory){
+        return;
+    }
     if(props.history){
         localStorage.setItem(table_key, JSON.stringify(props.filters.obj));
     }else{
