@@ -53,7 +53,9 @@ const setData = () => {
         return;
     }
     if(props.history){
-        localStorage.setItem(table_key, JSON.stringify(props.filters.obj));
+        if(page.props.query.page){
+            localStorage.setItem(table_key, JSON.stringify(props.filters.obj));
+        }
     }else{
         localStorage.removeItem(table_key);
     }
