@@ -46,7 +46,7 @@ const loadAjaxData = async (query, cache = false) => {
     }
 
     if (!ajaxData.value.some(option => option.id === dataValue.value)) {
-        dataValue.value = null;
+        dataValue.value = props.multiple ? [] : null;
     }
     emit('callback', ajaxData.value);
 }
