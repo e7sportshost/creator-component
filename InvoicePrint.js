@@ -6,7 +6,7 @@ function onSendMessage(printerType, url, base64_xml, success, reject) {
   }
 
   if(obj[printerType]){
-    return obj[printerType](url, base64_xml);
+    return obj[printerType](url, base64_xml, success, reject);
   }else{
     return;
   }
