@@ -20,7 +20,7 @@ const props = defineProps({
     history: { type: Boolean, default: true },
     banHistory: { type: Boolean, default: false },
     advanced: { type: Boolean, default: false },
-    resetData: { type: Object, default: {} },
+    resetData: { type: Object, default: null },
     customReset: { type: Boolean, default: false },
     refs: { type: Boolean, default: false },
     selectedHighlight: { type: Boolean, default: false },
@@ -41,6 +41,7 @@ const props = defineProps({
     showSummary: { type: Boolean, default: false },
     summaryMethod: { type: Function },
     sumText: { type: String, default: 'sum' },
+    pageLayout: { type: String, default: 'total, sizes, prev, pager, next' },
 })
 
 const page = usePage();
@@ -262,7 +263,7 @@ defineExpose({
         v-model:page-size="filters.obj.rows"
         :default-page-size="15"
         :page-sizes="[15, 30, 50, 100]"
-        layout="sizes, prev, pager, next"
+        :layout="pageLayout"
         :total="data.total"
         @size-change="onRow"
         @current-change="onPage"
