@@ -18,8 +18,9 @@ const props = defineProps({
         obj: {}
     } },
     history: { type: Boolean, default: true },
+    banHistory: { type: Boolean, default: false },
     advanced: { type: Boolean, default: false },
-    resetData: { type: Object, default: {} },
+    resetData: { type: Object, default: null },
     customReset: { type: Boolean, default: false },
     refs: { type: Boolean, default: false },
     selectedHighlight: { type: Boolean, default: false },
@@ -40,6 +41,7 @@ const props = defineProps({
     showSummary: { type: Boolean, default: false },
     summaryMethod: { type: Function },
     sumText: { type: String, default: 'sum' },
+    pageLayout: { type: String, default: 'total, sizes, prev, pager, next' },
 })
 
 const page = usePage();
@@ -47,15 +49,20 @@ const langs = page.props.langs;
 const table_key = `${ page.props.routeNameData }_query`;
 const prefix = page.props.prefix || 'backend';
 
-const setData = () => {
+const setData = (checkPage) => {
+    if(props.banHistory){
+        return;
+    }
     if(props.history){
-        localStorage.setItem(table_key, JSON.stringify(props.filters.obj));
+        if(!checkPage || (checkPage && page.props.query.page)){
+            localStorage.setItem(table_key, JSON.stringify(props.filters.obj));
+        }
     }else{
         localStorage.removeItem(table_key);
     }
 }
 
-setData();
+setData(true);
 
 const setting = {
     replace: true,
@@ -102,7 +109,7 @@ const searchData = () => {
 }
 
 const onSearch = () => {
-    setData();
+    setData(false);
     emit('search', setting);
     if(props.autoClear){
         props.filters.obj.search = '';
@@ -256,7 +263,7 @@ defineExpose({
         v-model:page-size="filters.obj.rows"
         :default-page-size="15"
         :page-sizes="[15, 30, 50, 100]"
-        layout="sizes, prev, pager, next"
+        :layout="pageLayout"
         :total="data.total"
         @size-change="onRow"
         @current-change="onPage"

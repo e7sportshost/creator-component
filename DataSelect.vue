@@ -44,6 +44,10 @@ const loadAjaxData = async (query, cache = false) => {
             ajaxData.value = await cacheStore.getData(query, props, cache);
         }
     }
+
+    if (!ajaxData.value.some(option => option.id === dataValue.value)) {
+        dataValue.value = props.multiple ? [] : null;
+    }
     emit('callback', ajaxData.value);
 }
 

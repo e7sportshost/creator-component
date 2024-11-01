@@ -44,7 +44,7 @@ watch([() => props.modelValue], () => {
 </script>
 
 <style scoped>
-  .text-red >>> .el-input__inner {
+  .text-red :deep(.el-input__inner) {
     color: red;
   }
 </style>

@@ -66,10 +66,10 @@ const handlePictureCardPreview = (uploadFile) => {
 </script>
 
 <style scoped>
-::v-deep .el-upload--picture-card{
+:deep(.el-upload--picture-card){
     height: auto;
 }
-.w-full >>> .el-upload{
+.w-full :deep(.el-upload){
     width: 100%;
 }
 </style>
