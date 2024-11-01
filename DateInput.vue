@@ -109,7 +109,7 @@ const visibleChange = (value) => {
       :disabled="disabled"
       :type="type"
       :value-format="type == 'datetimerange' ? 'YYYY-MM-DD HH:mm:ss' : valueFormat"
-      :default-time="defaultTime"
+      :default-time="type.indexOf('range') > -1 ? defaultTime : new Date(2000, 1, 1, 0, 0, 0)"
       @change="emitUpdate"
       :range-separator="rangeSeparator"
       :start-placeholder="startPlaceholder"
