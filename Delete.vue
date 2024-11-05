@@ -3,6 +3,7 @@
 import { router, Link, usePage } from '@inertiajs/vue3'
 import { TrashIcon } from "@heroicons/vue/24/solid"
 import SuccessAlert from '@/Services/SuccessAlert'
+import { ElTooltip } from 'element-plus';
 
 import { confirmDelete } from '@/Services/confirmDelete';
 import CheckPermissions from './CheckPermissions';
@@ -23,14 +24,16 @@ const onDelete = async (id) => {
 </script>
 
 <template>
-  <a
-    href="#"
-    @click="onDelete(item.id)"
-    v-if="!permissions || permissions && CheckPermissions(`${ prefix }.${ $page.props.routeNameData }.destroy`, `delete ${ $page.props.routeNameData }`, item)"
-    class="inline-block pr-4 text-red-400 duration-100 rounded hover:text-red-600"
-  >
-    <slot>
-      <TrashIcon class="w-6 h-6" />
-    </slot>
-  </a>
+  <ElTooltip :content="page.props.langs.delete">
+    <a
+      href="#"
+      @click="onDelete(item.id)"
+      v-if="!permissions || permissions && CheckPermissions(`${ prefix }.${ $page.props.routeNameData }.destroy`, `delete ${ $page.props.routeNameData }`, item)"
+      class="inline-block pr-4 text-red-400 duration-100 rounded hover:text-red-600"
+    >
+      <slot>
+        <TrashIcon class="w-6 h-6" />
+      </slot>
+    </a>
+  </ElTooltip>
 </template>
