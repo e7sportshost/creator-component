@@ -1,4 +1,7 @@
+import { usePage } from '@inertiajs/vue3'
 import StarWebPrintTrader from './Plugns/StarWebPrintTrader';
+import { confirmCustom } from '@/Services/confirmCustom'
+const page = usePage();
 
 function onSendMessage(printerType, url, base64_xml) {
   let obj = {
@@ -50,13 +53,12 @@ function mcPrint(url, base64_xml) {
 			resolve(msg); // 成功时返回 response
 		}
 
-		trader.onError = function (response) {
+		trader.onError = async (response) => {
 			var msg = '- onError -\n\n';
 			msg += '\tStatus:' + response.status + '\n';
 			msg += '\tResponseText:' + response.responseText + '\n\n';
 
-			var answer = confirm('列印失敗 要重試嗎？\n');
-			if (answer) {
+			if(await confirmCustom(page.props.langs, '列印失敗 要重試嗎？\n')){
 				// 重试
 				mcPrint(url, base64_xml).then(resolve).catch(reject); // 递归调用时也需要返回 Promise
 			} else {
