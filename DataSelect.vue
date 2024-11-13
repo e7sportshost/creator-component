@@ -45,8 +45,14 @@ const loadAjaxData = async (query, cache = false) => {
         }
     }
 
-    if (!ajaxData.value.some(option => option.id === dataValue.value)) {
-        dataValue.value = props.multiple ? [] : null;
+    if(props.multiple){
+        if (!ajaxData.value.some(option => dataValue.value.includes(option.id))) {
+            dataValue.value = [];
+        }
+    }else{
+        if (!ajaxData.value.some(option => option.id === dataValue.value)) {
+            dataValue.value = null;
+        }
     }
     emit('callback', ajaxData.value);
 }
