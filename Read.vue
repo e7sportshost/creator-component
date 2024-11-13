@@ -3,6 +3,7 @@
 import { Link, usePage } from '@inertiajs/vue3'
 import { EyeIcon } from "@heroicons/vue/24/solid"
 import CheckPermissions from './CheckPermissions';
+import { ElTooltip } from 'element-plus';
 
 const props = defineProps({
   item: { type: Object },
@@ -21,24 +22,26 @@ const prefix = page.props.prefix || 'backend';
   <template
     v-if="!permissions || permissions && CheckPermissions(`${ prefix }.${ $page.props.routeNameData }.show`, `read ${ $page.props.routeNameData }`, item)"
   >
-    <Link
-      v-if="link"
-      :href="LinkHref || route(`${ prefix }.${ $page.props.routeNameData }.show`, item.id)"
-      class="inline-block pr-4 duration-100 rounded hover:text-green-600"
-    >
-      <slot>
-        <EyeIcon class="w-6 h-6" />
-      </slot>
-    </Link>
+    <ElTooltip :content="page.props.langs.read">
+      <Link
+        v-if="link"
+        :href="LinkHref || route(`${ prefix }.${ $page.props.routeNameData }.show`, item.id)"
+        class="inline-block pr-4 duration-100 rounded hover:text-green-600"
+      >
+        <slot>
+          <EyeIcon class="w-6 h-6" />
+        </slot>
+      </Link>
 
 
-    <div
-      v-else
-      class="inline-block pr-4 duration-100 rounded hover:text-green-600"
-    >
-      <slot>
-        <EyeIcon class="w-6 h-6" />
-      </slot>
-    </div>
+      <div
+        v-else
+        class="inline-block pr-4 duration-100 rounded hover:text-green-600"
+      >
+        <slot>
+          <EyeIcon class="w-6 h-6" />
+        </slot>
+      </div>
+    </ElTooltip>
   </template>
 </template>
