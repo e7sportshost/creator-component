@@ -218,7 +218,7 @@ const handleSelectionChange = (val) => {
             :href="route(`${ prefix }.audits.index`, { table: data_key, table_id: scope.row?.id })"
           >
             <Document
-              class="inline-block h-[1.1rem] text-gray-500 cursor-pointer hover:text-black"
+              class="ml-1 inline-block h-[1.1rem] text-gray-500 cursor-pointer hover:text-black"
             />
           </Link>
 
