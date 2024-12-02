@@ -19,7 +19,7 @@ function onSendMessage(printerType, url, base64_xml) {
 function mcPrint(url, base64_xml) {
 	//開錢箱
 	console.log('開錢箱');
-	starWeb(url, '\x1B\x70\x00\x19\xFA');
+	starWeb(url, '\x1B\x07\x00\x00');
 	console.log('列印');
 	//列印
 	return starWeb(url, decodeURIComponent(escape(atob(base64_xml))));
