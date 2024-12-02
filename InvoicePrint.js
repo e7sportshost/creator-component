@@ -15,8 +15,15 @@ function onSendMessage(printerType, url, base64_xml) {
   }
 }
 
-
 function mcPrint(url, base64_xml) {
+	//開錢箱
+	starWeb(url, '\x1B\x70\x00\x19\xFA');
+	//列印
+	starWeb(url, decodeURIComponent(escape(atob(base64_xml))));
+}
+
+
+function starWeb(url, request) {
 	return new Promise((resolve, reject) => {
 		var papertype = '';
 		var timeout = 90000;
@@ -67,7 +74,7 @@ function mcPrint(url, base64_xml) {
 		}
 
 		// 发送解码后的 XML 请求
-		trader.sendMessage({ request: decodeURIComponent(escape(atob(base64_xml))) });
+		trader.sendMessage({ request: request });
 	});
 }
 
