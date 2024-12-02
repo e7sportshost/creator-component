@@ -15,6 +15,7 @@ function onSendMessage(printerType, url, base64_xml) {
   }
 }
 
+
 function mcPrint(url, base64_xml) {
 	// //開錢箱
 	// starWeb(url, '\x1B\x70\x00\x19\xFA');
