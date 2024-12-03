@@ -26,7 +26,7 @@ const prefix = page.props.prefix || 'backend';
       <Link
         v-if="link"
         :href="LinkHref || route(`${ prefix }.${ $page.props.routeNameData }.show`, item.id)"
-        class="inline-block pr-4 duration-100 rounded hover:text-green-600"
+        class="inline-block pr-4 text-stone-700 duration-100 rounded hover:text-green-600"
       >
         <slot>
           <EyeIcon class="w-6 h-6" />
@@ -36,7 +36,7 @@ const prefix = page.props.prefix || 'backend';
 
       <div
         v-else
-        class="inline-block pr-4 duration-100 rounded hover:text-green-600"
+        class="inline-block pr-4 text-stone-700 duration-100 rounded hover:text-green-600"
       >
         <slot>
           <EyeIcon class="w-6 h-6" />
