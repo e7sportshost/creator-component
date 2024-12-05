@@ -14,6 +14,8 @@ const props = defineProps({
     option_label: { type: String, default: 'name'},
     customData: { type: Array },
     route_parameter: { type: Object, default: () => ({  })},
+    clearable: { type: Boolean, default: true },
+    remoteShowSuffix: { type: Boolean, default: true },
     disabled: { type: Boolean, default: false },
     remote: { type: Boolean, default: true },
     placeholder: { type: String, default: 'Select' },
@@ -91,7 +93,8 @@ watch(() => props.customData, (newValue) => {
       v-model="dataValue"
       class="w-full"
       @change="value => changeData(value)"
-      clearable
+      :clearable="clearable"
+      :remoteShowSuffix="remoteShowSuffix"
       :multiple="multiple"
       :remote="remote"
       :remote-method="loadAjaxData"
