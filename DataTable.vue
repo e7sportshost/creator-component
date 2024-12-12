@@ -198,6 +198,7 @@ defineExpose({
             <div class="hidden sm:block sm:m-0">{{ langs.search }}</div>
         </el-button>
         <Create v-if="createBtn" />
+        <slot name="add_btn" />
     </div>
 
     <template v-if="advanced">
