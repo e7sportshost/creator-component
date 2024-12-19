@@ -25,7 +25,7 @@ const prefix = page.props.prefix || 'backend';
     <ElTooltip :content="page.props.langs.read">
       <Link
         v-if="link"
-        prefetch
+
         :href="LinkHref || route(`${ prefix }.${ $page.props.routeNameData }.show`, item.id)"
         class="inline-block pr-4 text-stone-700 duration-100 rounded hover:text-green-600"
       >

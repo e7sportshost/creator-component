@@ -30,7 +30,7 @@ const prefix = page.props.prefix || 'backend';
         <template v-if="add_tabs.length > 0">
             <template v-for="(item, key) in add_tabs" :key="key">
                 <li class="mr-2" v-if="!item.permissions || (item.permissions && $page.props.permissions.includes(`read ${ item.permissions }`)) || $page.props.auth.user.super_admin">
-                    <Link prefetch :href="item.route" :class="[
+                    <Link  :href="item.route" :class="[
                         action === item.action ? 'text-blue-600 dark:text-gray-200 border-blue-600 dark:border-gray-200': 'dark:text-gray-500 dark:border-gray-500'
                     ]" class="inline-block p-4 border-b-2 rounded-t-lg active hover:text-blue-600 hover:border-blue-600 dark:hover:text-gray-200 dark:hover:border-gray-200">{{ item.name }}</Link>
                 </li>
@@ -40,7 +40,7 @@ const prefix = page.props.prefix || 'backend';
         <template v-else>
             <li class="mr-2">
                 <Link
-                    prefetch
+
                     :href="table_id ?
                     (route().has(`${ prefix }.${ table }.edit`, table_id) ? route(`${ prefix }.${ table }.edit`, table_id) : '#') :
                     (route().has(`${ prefix }.${ table }.create`) ? route(`${ prefix }.${ table }.create`) : '#' )"
@@ -50,7 +50,7 @@ const prefix = page.props.prefix || 'backend';
             </li>
             <li class="mr-2" v-if="table_id">
                 <Link
-                    prefetch
+
                     v-if="$page.props.permissions.includes('read audits') || $page.props.auth.user.super_admin"
                     :href="route(`${ prefix }.audits.index`, { table: table, table_id: table_id })" :class="[
                     action === 'audits' ? 'text-blue-600 dark:text-gray-200 border-blue-600 dark:border-gray-200': 'dark:text-gray-500 dark:border-gray-500'

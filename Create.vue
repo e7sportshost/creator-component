@@ -25,7 +25,7 @@ const prefix = page.props.prefix || 'backend';
         v-if="link"
         :href="route(`${ prefix }.${ $page.props.routeNameData }.create`)"
         class="ml-4"
-        prefetch
+
       >
         <ElButton :icon="Plus" type="success" size="large">
             <div class="hidden sm:block sm:m-0">{{ $page.props.langs[$page.props.routeNameData]?.create || $page.props.langs.create }}</div>
