@@ -44,7 +44,6 @@ const handleCheckAllChange = (val) => {
 }
 
 const handleCheckedChange = (value, changeFlag = true) => {
-
   const checkedCount = value.length
   checkAll.value = checkedCount === ajaxData.value.length
   isIndeterminate.value = checkedCount > 0 && checkedCount < ajaxData.value.length
@@ -52,6 +51,7 @@ const handleCheckedChange = (value, changeFlag = true) => {
     changeData(dataValue.value);
   }
 }
+handleCheckedChange(dataValue.value, false);
 
 const changeData = (value) => {
     emit('update:modelValue', value);
