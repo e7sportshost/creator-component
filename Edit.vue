@@ -24,6 +24,7 @@ const prefix = page.props.prefix || 'backend';
     <ElTooltip :content="page.props.langs.edit">
       <Link
         v-if="link"
+        prefetch
         :href="LinkHref || route(`${ prefix }.${ $page.props.routeNameData }.edit`, item.id)"
         class="inline-block pr-4 text-green-400 duration-100 rounded hover:text-green-600"
       >

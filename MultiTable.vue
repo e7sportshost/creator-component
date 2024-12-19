@@ -214,6 +214,7 @@ const handleSelectionChange = (val) => {
             @click="remove(scope.$index)"
           />
           <Link
+            prefetch
             v-if="scope.row?.id && auditsShow && ($page.props.permissions.includes('read audits') || $page.props.auth.user.super_admin)"
             :href="route(`${ prefix }.audits.index`, { table: data_key, table_id: scope.row?.id })"
           >
