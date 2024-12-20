@@ -32,7 +32,8 @@ const emit = defineEmits(['update:modelValue', 'updateDelete'])
 
 const changeData = (list) => {
     if(props.multiple){
-        emit('update:modelValue', list.map(item => item.raw))
+        let tmp = list.filter(item => item.raw).map(item => item.raw);
+        emit('update:modelValue', tmp)
     }else{
         emit('update:modelValue', list?.pop().raw)
     }
