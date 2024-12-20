@@ -203,7 +203,7 @@ const handleSelectionChange = (val) => {
         <template #header>
           <PlusIcon
             v-if="addShow"
-            class="inline-block h-4 -mt-1 text-danger-500 cursor-pointer hover:bg-gray-200 hover:rounded-full"
+            class="inline-block h-4 -mt-1 text-danger-500 cursor-pointer hover:bg-gray-200 hover:rounded-full text-green-500"
             @click="add"
           />
         </template>
