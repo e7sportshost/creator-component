@@ -19,11 +19,20 @@ defineProps({
 const page = usePage();
 const prefix = page.props.prefix || 'backend';
 
+const localHistory = (routeName) => {
+  return JSON.parse(localStorage.getItem(`${ routeName }_query`));
+}
+
+const hrefLink = (routeName) => {
+  let query = localHistory(routeName);
+  return routeName != '' ? route(`backend.${routeName}.index`, query || {}) : '#';
+}
+
 </script>
 
 <template>
     <Link
-        :href="href ? href : route(`${ prefix }.${ $page.props.routeNameData }.index`)"
+        :href="href ? href : hrefLink($page.props.routeNameData)"
     >
         <ElButton severity="secondary" outlined :size="size">
             <slot />
