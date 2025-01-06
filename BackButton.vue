@@ -25,7 +25,7 @@ const localHistory = (routeName) => {
 
 const hrefLink = (routeName) => {
   let query = localHistory(routeName);
-  return routeName != '' ? route(`backend.${routeName}.index`, query || {}) : '#';
+  return routeName != '' ? route(`${ prefix }.${ routeName }.index`, query || {}) : '#';
 }
 
 </script>
