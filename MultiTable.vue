@@ -8,6 +8,7 @@ import { Document } from '@element-plus/icons-vue'
 import DateInput from './DateInput.vue';
 import NumberInput from './NumberInput.vue';
 import DataSelect from './DataSelect.vue';
+import AuditsDialog from '@/Components/AuditsDialog.vue';
 
 const props = defineProps({
   data_key: { type: String },
@@ -35,6 +36,7 @@ const multiTable = ref(null);
 
 const page = usePage();
 const prefix = page.props.prefix || 'backend';
+const audits = page.props.audits || 'link';
 
 //emit
 const emit = defineEmits(['add'])
@@ -111,6 +113,13 @@ const getRowKey = (row) => {
 const handleSelectionChange = (val) => {
     ids.value = val;
     emit('selectionChange', val);
+}
+
+const auditVisible = ref(false)
+const table_id = ref(null)
+const showDialog = (id) => {
+  auditVisible.value = true;
+  table_id.value = id;
 }
 </script>
 
@@ -213,15 +222,26 @@ const handleSelectionChange = (val) => {
             class="inline-block h-[1.1rem] text-gray-500 cursor-pointer hover:text-black"
             @click="remove(scope.$index)"
           />
-          <Link
-
+          <template
             v-if="scope.row?.id && auditsShow && ($page.props.permissions.includes('read audits') || $page.props.auth.user.super_admin)"
-            :href="route(`${ prefix }.audits.index`, { table: data_key, table_id: scope.row?.id })"
           >
-            <Document
-              class="ml-1 inline-block h-[1.1rem] text-gray-500 cursor-pointer hover:text-black"
-            />
-          </Link>
+            <template v-if="audits == 'dialog'">
+              <span @click="showDialog(scope.row?.id || null)">
+                <Document
+                  class="ml-1 inline-block h-[1.1rem] text-gray-500 cursor-pointer hover:text-black"
+                />
+              </span>
+            </template>
+            <template v-else>
+              <Link
+                :href="route(`${ prefix }.audits.index`, { table: data_key, table_id: scope.row?.id })"
+              >
+                <Document
+                  class="ml-1 inline-block h-[1.1rem] text-gray-500 cursor-pointer hover:text-black"
+                />
+              </Link>
+            </template>
+          </template>
 
         </template>
     </el-table-column>
@@ -236,4 +256,6 @@ const handleSelectionChange = (val) => {
       layout="sizes, prev, pager, next"
       :total="data.length"
   />
+
+  <AuditsDialog v-model="auditVisible" :table="data_key" :table_id="table_id" />
 </template>
