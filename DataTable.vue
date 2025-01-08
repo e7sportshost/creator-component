@@ -47,14 +47,14 @@ const props = defineProps({
 
 
 const routeNameData = ref(props.routeNameData);
+if(routeNameData.value == null){
+    routeNameData.value = page.props.routeNameData;
+}
 const page = usePage();
 const langs = page.props.langs;
 const table_key = `${ routeNameData.value }_query`;
 const prefix = page.props.prefix || 'backend';
 
-if(routeNameData.value == null){
-    routeNameData.value = page.props.routeNameData;
-}
 
 const setData = (checkPage) => {
     if(props.banHistory){
