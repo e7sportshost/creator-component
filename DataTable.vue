@@ -47,10 +47,10 @@ const props = defineProps({
 
 
 const routeNameData = ref(props.routeNameData);
+const page = usePage();
 if(routeNameData.value == null){
     routeNameData.value = page.props.routeNameData;
 }
-const page = usePage();
 const langs = page.props.langs;
 const table_key = `${ routeNameData.value }_query`;
 const prefix = page.props.prefix || 'backend';
