@@ -42,12 +42,19 @@ const props = defineProps({
     summaryMethod: { type: Function },
     sumText: { type: String, default: 'sum' },
     pageLayout: { type: String, default: 'total, sizes, prev, pager, next' },
+    routeNameData: { type: String, default: null },
 })
 
+
+const routeNameData = ref(props.routeNameData);
 const page = usePage();
 const langs = page.props.langs;
-const table_key = `${ page.props.routeNameData }_query`;
+const table_key = `${ routeNameData.value }_query`;
 const prefix = page.props.prefix || 'backend';
+
+if(routeNameData.value == null){
+    routeNameData.value = page.props.routeNameData;
+}
 
 const setData = (checkPage) => {
     if(props.banHistory){
@@ -122,7 +129,7 @@ const onReset = () => {
     if(props.customReset){
         emit('reset');
     } else {
-        router.get(route(`${ prefix }.${ page.props.routeNameData }.index`), props.resetData || page.props.parameterData);
+        router.get(route(`${ prefix }.${ routeNameData.value }.index`), props.resetData || page.props.parameterData);
     }
 }
 
