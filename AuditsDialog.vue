@@ -44,9 +44,12 @@ const filters = useForm({
 })
 
 const search = () => {
-    loadingInstance.value = ElLoading.service({
-        target: '.el-dialog'
-    });
+    setTimeout(() => {
+        loadingInstance.value = ElLoading.service({
+            target: '.el-dialog'
+        });
+    }, 50)
+
     Request.get(route(`${ prefix }.${ routeNameData.value }.index`, filters.obj)).then(response => {
         data.value = response.data.data;
         search_data.value = response.data.search_data;
