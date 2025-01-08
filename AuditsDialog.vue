@@ -74,7 +74,6 @@ watch(() => props.modelValue, (newValue) => {
 })
 
 watch(() => props.table_id, (newValue) => {
-  console.log('table_id', newValue);
   filters.obj.table_id = newValue;
 })
 
