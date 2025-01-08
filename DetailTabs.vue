@@ -21,6 +21,7 @@ const props = defineProps({
         type: Array,
         default: [],
     },
+    audit: { type: Boolean, default: true },
 });
 
 const page = usePage();
@@ -90,7 +91,6 @@ const showDialog = () => {
         <template v-else>
             <li class="mr-2">
                 <Link
-
                     :href="table_id ?
                     (route().has(`${ prefix }.${ table }.edit`, table_id) ? route(`${ prefix }.${ table }.edit`, table_id) : '#') :
                     (route().has(`${ prefix }.${ table }.create`) ? route(`${ prefix }.${ table }.create`) : '#' )"
@@ -98,6 +98,8 @@ const showDialog = () => {
                     action === 'basic_data' ? 'text-blue-600 dark:text-gray-200 border-blue-600 dark:border-gray-200': 'dark:text-gray-500 dark:border-gray-500'
                 ]" class="inline-block p-4 border-b-2 rounded-t-lg active hover:text-blue-600 hover:border-blue-600 dark:hover:text-gray-200 dark:hover:border-gray-200">{{ $page.props.langs.basic_data }}</Link>
             </li>
+        </template>
+        <template v-if="audit">
             <li class="mr-2" v-if="table_id">
                 <template v-if="$page.props.permissions.includes('read audits') || $page.props.auth.user.super_admin">
                     <template v-if="audits == 'dialog'">
