@@ -40,8 +40,8 @@ const filters = useForm({
         sortOrder: null,
         page: 1,
         rows: 15,
-        table: null,
-        table_id: null,
+        table: props.table,
+        table_id: props.table_id,
     }
 })
 
@@ -63,8 +63,8 @@ const reset = () => {
     filters.obj.sortOrder = null;
     filters.obj.page = 1;
     filters.obj.rows = 15;
-    filters.obj.table = null;
-    filters.obj.table_id = null;
+    filters.obj.table = props.table;
+    filters.obj.table_id = props.table_id;
     search();
 }
 
