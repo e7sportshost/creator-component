@@ -118,8 +118,8 @@ const handleSelectionChange = (val) => {
 const auditVisible = ref(false)
 const table_id = ref(null)
 const showDialog = (id) => {
-  auditVisible.value = true;
   table_id.value = id;
+  auditVisible.value = true;
 }
 </script>
 
