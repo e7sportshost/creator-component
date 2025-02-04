@@ -1,28 +1,61 @@
 import { usePage } from '@inertiajs/vue3'
+import axios from 'axios'
 import StarWebPrintTrader from './Plugns/StarWebPrintTrader';
 import { confirmCustom } from '@/Services/confirmCustom'
 const page = usePage();
 
-function onSendMessage(printerType, url, base64_xml) {
+function onSendMessage(printerType, printData) {
   let obj = {
     1: mcPrint,
+    2: gmPrint,
   }
 
   if(obj[printerType]){
-    return obj[printerType](url, base64_xml);
+    return obj[printerType](printData);
   }else{
     return;
   }
 }
 
 
-function mcPrint(url, base64_xml) {
+
+function mcPrint(printData) {
 	//開錢箱
-	console.log('開錢箱');
-	starWeb(url, '\x1B\x07\x00\x00');
-	console.log('列印');
+	// console.log('開錢箱');
+	// starWeb(url, '\x1B\x07\x00\x00');
+	// console.log('列印');
 	//列印
+	let url = `//${printData.store?.e_invoice_machine_ip}/StarWebPRNT/SendMessage`;
+	let base64_xml = printData.invoice?.response_data?.base64_data;
 	return starWeb(url, decodeURIComponent(escape(atob(base64_xml))));
+}
+
+function gmPrint(printData) {
+	return new Promise((resolve, reject) => {
+		let url = `//${printData.store?.e_invoice_serve_ip}.grandmall.me:9119/print`;
+		let base64_xml = printData.invoice?.response_data?.base64_data;
+		let printer_url = printData.store?.e_invoice_machine_ip;
+
+		axios.post(url, {
+			ip: printer_url,
+			port: 9100,
+			s: encodeURIComponent(base64_xml),
+		})
+		.then(function (response) {
+			if ( response.code == 0 ) {
+				resolve('列印成功');
+			}
+			else {
+				reject('列印失敗');
+			}
+		})
+		.catch(function (error) {
+			reject(`列印失敗\n
+				無法與印表機建立連線\n
+				檢查印表機是否有啟動\n
+				檢查印表機的應用程式是否有啟動`);
+		});
+	});
 }
 
 
