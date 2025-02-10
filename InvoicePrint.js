@@ -47,7 +47,7 @@ function gmPrint(printData) {
 			}
 		})
 		.then(function (response) {
-			if ( response.code == 0 ) {
+			if ( response.data?.code == 0 ) {
 				resolve('列印成功');
 			}
 			else {
