@@ -34,6 +34,7 @@ function gmPrint(printData) {
 	return new Promise((resolve, reject) => {
 		let url = `//${printData.store?.e_invoice_serve_ip}.grandmall.me:9119/print`;
 		let base64_xml = printData.invoice?.response_data?.base64_data;
+		// console.log(base64_xml, encodeURIComponent(base64_xml));
 		let printer_url = printData.store?.e_invoice_machine_ip;
 
 		axios.post(url, new URLSearchParams({
@@ -51,12 +52,11 @@ function gmPrint(printData) {
 				resolve('列印成功');
 			}
 			else {
-				reject('列印失敗');
+				reject('');
 			}
 		})
 		.catch(function (error) {
-			reject(`列印失敗\n
-				無法與印表機建立連線\n
+			reject(`\n無法與印表機建立連線\n
 				檢查印表機是否有啟動\n
 				檢查印表機的應用程式是否有啟動`);
 		});
