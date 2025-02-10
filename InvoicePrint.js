@@ -36,13 +36,17 @@ function gmPrint(printData) {
 		let base64_xml = printData.invoice?.response_data?.base64_data;
 		let printer_url = printData.store?.e_invoice_machine_ip;
 
-		axios.post(url, {
+		axios.post(url, new URLSearchParams({
 			ip: printer_url,
 			port: 9100,
 			s: encodeURIComponent(base64_xml),
+		}), {
+			timeout: 3000,
+			headers: {
+					'Content-Type': 'application/x-www-form-urlencoded'
+			}
 		})
 		.then(function (response) {
-			console.log('gmPrint', response);
 			if ( response.code == 0 ) {
 				resolve('列印成功');
 			}
@@ -51,7 +55,6 @@ function gmPrint(printData) {
 			}
 		})
 		.catch(function (error) {
-			console.log('gmPrint_error', error);
 			reject(`列印失敗\n
 				無法與印表機建立連線\n
 				檢查印表機是否有啟動\n
