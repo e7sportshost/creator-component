@@ -7,7 +7,7 @@ const page = usePage();
 function onSendMessage(printerType, printData) {
   let obj = {
     1: mcPrint,
-    2: gmPrint,
+    7: gmPrint,
   }
 
   if(obj[printerType]){
