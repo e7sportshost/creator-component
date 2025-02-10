@@ -40,7 +40,7 @@ function gmPrint(printData) {
 		axios.post(url, new URLSearchParams({
 			ip: printer_url,
 			port: 9100,
-			s: encodeURIComponent(base64_xml),
+			s: base64_xml,
 		}), {
 			timeout: 3000,
 			headers: {
