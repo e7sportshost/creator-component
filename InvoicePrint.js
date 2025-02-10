@@ -42,6 +42,7 @@ function gmPrint(printData) {
 			s: encodeURIComponent(base64_xml),
 		})
 		.then(function (response) {
+			console.log('gmPrint', response);
 			if ( response.code == 0 ) {
 				resolve('列印成功');
 			}
@@ -50,6 +51,7 @@ function gmPrint(printData) {
 			}
 		})
 		.catch(function (error) {
+			console.log('gmPrint_error', error);
 			reject(`列印失敗\n
 				無法與印表機建立連線\n
 				檢查印表機是否有啟動\n
