@@ -23,6 +23,7 @@ const props = defineProps({
   disabled: { type: Boolean, default: false },
   pageSize: { type: Number, default: 5 },
   pageSizes: { type: Array, default: [5, 10, 15, 30] },
+  rowClassName: { type: Function, default: () => {} },
   audits: { type: Boolean, default: true },
 })
 
@@ -136,6 +137,7 @@ const showDialog = (id) => {
     :row-key="getRowKey"
     :default-expand-all="false"
     @selection-change="handleSelectionChange"
+    :row-class-name="rowClassName"
   >
     <el-table-column  label="#" prop="id" width="35">
         <template #default="scope">
@@ -177,6 +179,14 @@ const showDialog = (id) => {
 
           <div v-if="column.type==='date'">
             <DateInput v-model="row[column.key]" :placeholder="column.label" :disabled="disabled || column.disabled || false" />
+          </div>
+
+          <div v-if="column.type==='text'">
+            <p class="text-base">{{ row[column.key] }}</p>
+          </div>
+
+          <div v-if="column.type==='text_number'">
+            <p class="text-base">{{ parseFloat(row[column.key]).toLocaleString() }}</p>
           </div>
 
           <div v-if="column.type==='checkbox'">
