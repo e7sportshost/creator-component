@@ -31,6 +31,15 @@ function mcPrint(printData) {
 }
 
 function gmPrint(printData) {
+	gmCash(printData);
+	return gmWeb(printData, printData.invoice?.response_data?.base64_data);
+}
+
+function gmCash(printData) {
+	return gmWeb(printData, '\x1B@\x1Bp0<x');
+}
+
+function gmWeb(printData, baseData) {
 	return new Promise((resolve, reject) => {
 		let url = `//${printData.store?.e_invoice_serve_ip}.grandmall.me:9119/print`;
 		let base64_xml = printData.invoice?.response_data?.base64_data;
