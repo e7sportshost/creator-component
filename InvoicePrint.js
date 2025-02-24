@@ -36,7 +36,7 @@ function gmPrint(printData) {
 }
 
 function gmCash(printData) {
-	return gmWeb(printData, '\x1B@\x1Bp0<x');
+	return gmWeb(printData, 'G0AbcDA8eA==');
 }
 
 function gmWeb(printData, baseData) {
