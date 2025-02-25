@@ -42,14 +42,12 @@ function gmCash(printData) {
 function gmWeb(printData, baseData) {
 	return new Promise((resolve, reject) => {
 		let url = `//${printData.store?.e_invoice_serve_ip}.grandmall.me:9119/print`;
-		let base64_xml = printData.invoice?.response_data?.base64_data;
-		// console.log(base64_xml, encodeURIComponent(base64_xml));
 		let printer_url = printData.store?.e_invoice_machine_ip;
 
 		axios.post(url, new URLSearchParams({
 			ip: printer_url,
 			port: 9100,
-			s: base64_xml,
+			s: baseData,
 		}), {
 			timeout: 3000,
 			headers: {
