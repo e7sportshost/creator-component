@@ -2,6 +2,7 @@ import { usePage } from '@inertiajs/vue3'
 import axios from 'axios'
 import StarWebPrintTrader from './Plugns/StarWebPrintTrader';
 import { confirmCustom } from '@/Services/confirmCustom'
+import ConfirmsPassword from './ConfirmsPassword.vue';
 const page = usePage();
 
 function onSendMessage(printerType, printData) {
@@ -17,18 +18,32 @@ function onSendMessage(printerType, printData) {
   }
 }
 
+function onOpenCash(printerType, printData) {
+  let obj = {
+    // 1: mcPrint,
+    7: gmCash,
+  }
 
-
-function mcPrint(printData) {
-	//開錢箱
-	// console.log('開錢箱');
-	// starWeb(url, '\x1B\x07\x00\x00');
-	// console.log('列印');
-	//列印
-	let url = `//${printData.store?.e_invoice_machine_ip}/StarWebPRNT/SendMessage`;
-	let base64_xml = printData.invoice?.response_data?.base64_data;
-	return starWeb(url, decodeURIComponent(escape(atob(base64_xml))));
+  if(obj[printerType]){
+    return obj[printerType](printData);
+  }else{
+    return;
+  }
 }
+
+function onStatus(printerType, printData) {
+  let obj = {
+    // 1: mcPrint,
+    7: gmStatus,
+  }
+
+  if(obj[printerType]){
+    return obj[printerType](printData);
+  }else{
+    return;
+  }
+}
+
 
 function gmPrint(printData) {
 	gmCash(printData);
@@ -39,20 +54,44 @@ function gmCash(printData) {
 	return gmWeb(printData, 'G0AbcDA8eA==');
 }
 
-function gmWeb(printData, baseData) {
+function gmStatus(printData) {
 	return new Promise((resolve, reject) => {
-		let url = `//${printData.store?.e_invoice_serve_ip}.grandmall.me:9119/print`;
-		let printer_url = printData.store?.e_invoice_machine_ip;
+		let url = `//${printData.store?.e_invoice_serve_ip}.grandmall.me:9119/status`;
 
-		axios.post(url, new URLSearchParams({
-			ip: printer_url,
-			port: 9100,
-			s: baseData,
-		}), {
+		axios({
+			method: 'get',
+			url: url,
 			timeout: 3000,
 			headers: {
-					'Content-Type': 'application/x-www-form-urlencoded'
-			}
+				'Content-Type': 'application/x-www-form-urlencoded',
+			},
+		})
+		.then(function (response) {
+			resolve('success');
+		})
+		.catch(function (error) {
+			reject(`error`);
+		});
+	});
+}
+
+function gmWeb(printData, baseData, path = 'print', method = 'post') {
+	return new Promise((resolve, reject) => {
+		let url = `//${printData.store?.e_invoice_serve_ip}.grandmall.me:9119/${ path }`;
+		let printer_url = printData.store?.e_invoice_machine_ip;
+
+		axios({
+			method: method,
+			url: url,
+			data: new URLSearchParams({
+				ip: printer_url,
+				port: 9100,
+				s: baseData,
+			}),
+			timeout: 3000,
+			headers: {
+				'Content-Type': 'application/x-www-form-urlencoded',
+			},
 		})
 		.then(function (response) {
 			if ( response.data?.code == 0 ) {
@@ -68,6 +107,18 @@ function gmWeb(printData, baseData) {
 				檢查印表機的應用程式是否有啟動`);
 		});
 	});
+}
+
+
+function mcPrint(printData) {
+	//開錢箱
+	// console.log('開錢箱');
+	// starWeb(url, '\x1B\x07\x00\x00');
+	// console.log('列印');
+	//列印
+	let url = `//${printData.store?.e_invoice_machine_ip}/StarWebPRNT/SendMessage`;
+	let base64_xml = printData.invoice?.response_data?.base64_data;
+	return starWeb(url, decodeURIComponent(escape(atob(base64_xml))));
 }
 
 
@@ -128,5 +179,7 @@ function starWeb(url, request) {
 
 
 export {
-  onSendMessage
+  onSendMessage,
+	onOpenCash,
+	onStatus
 }
