@@ -22,7 +22,7 @@ function checkType(type, printerType, printData) {
 	if(objType[printerType] && objType[printerType][type]){
 		return objType[printerType][type](printData);
 	}else{
-		return;
+		return  new Promise((resolve, reject) => { reject('error') });
 	}
 }
 
