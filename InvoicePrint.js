@@ -5,43 +5,37 @@ import { confirmCustom } from '@/Services/confirmCustom'
 import ConfirmsPassword from './ConfirmsPassword.vue';
 const page = usePage();
 
-function onSendMessage(printerType, printData) {
-  let obj = {
-    1: mcPrint,
-    7: gmPrint,
-  }
+const objType = {
+	1: {
+			'print': mcPrint,
+			// 'cash': mcmCash,
+			// 'status': mcStatus,
+	},
+	7: {
+			'print': gmPrint,
+			'cash': gmCash,
+			'status': gmStatus,
+	},
+};
 
-  if(obj[printerType]){
-    return obj[printerType](printData);
-  }else{
-    return;
-  }
+function checkType(type, printerType, printData) {
+	if(objType[printerType] && objType[printerType][type]){
+		return objType[printerType][type](printData);
+	}else{
+		return;
+	}
+}
+
+function onSendMessage(printerType, printData) {
+	return checkType('print', printerType, printData);
 }
 
 function onOpenCash(printerType, printData) {
-  let obj = {
-    // 1: mcPrint,
-    7: gmCash,
-  }
-
-  if(obj[printerType]){
-    return obj[printerType](printData);
-  }else{
-    return;
-  }
+	return checkType('cash', printerType, printData);
 }
 
 function onStatus(printerType, printData) {
-  let obj = {
-    // 1: mcPrint,
-    7: gmStatus,
-  }
-
-  if(obj[printerType]){
-    return obj[printerType](printData);
-  }else{
-    return;
-  }
+	return checkType('status', printerType, printData);
 }
 
 
