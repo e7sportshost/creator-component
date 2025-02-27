@@ -85,6 +85,7 @@ function gmWeb(printData, baseData, path = 'print', method = 'post') {
 			timeout: 3000,
 			headers: {
 				'Content-Type': 'application/x-www-form-urlencoded',
+				'X-Requested-With': undefined,
 			},
 		})
 		.then(function (response) {
