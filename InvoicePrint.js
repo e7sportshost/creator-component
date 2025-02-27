@@ -89,15 +89,16 @@ function gmWeb(printData, baseData, path = 'print', method = 'post') {
 		console.log(url, obj);
 
 		fetch(url, obj)
-		.then(function (response) {
-			let data = response.json();
-			console.log(data, response, response.text(), response.json());
-			if ( data?.code == 0 ) {
-				resolve('列印成功');
-			}
-			else {
-				reject('');
-			}
+		.then(response => response.json()) // 這裡只解析為 JSON
+		.then(data => {
+				console.log(data);
+				if ( data?.code == 0 ) {
+					// console.log(data.code);
+					resolve('列印成功');
+				}
+				else {
+					reject('');
+				}
 		})
 		.catch(function (error) {
 			reject(`\n無法與印表機建立連線\n
