@@ -91,7 +91,7 @@ function gmWeb(printData, baseData, path = 'print', method = 'post') {
 		fetch(url, obj)
 		.then(function (response) {
 			let data = response.json();
-			console.log(response.data);
+			console.log(response.data, response);
 			if ( data?.code == 0 ) {
 				resolve('列印成功');
 			}
