@@ -52,14 +52,14 @@ function gmStatus(printData) {
 	return new Promise((resolve, reject) => {
 		let url = `//${printData.store?.e_invoice_serve_ip}.grandmall.me:9119/status`;
 
-		axios({
-			method: 'get',
-			url: url,
-			timeout: 3000,
+		let obj = {
+			method: 'GET',
 			headers: {
-				'Content-Type': 'application/x-www-form-urlencoded',
-			},
-		})
+					'Content-Type': 'application/x-www-form-urlencoded'
+			}
+		};
+
+		fetch(url, obj)
 		.then(function (response) {
 			resolve('success');
 		})
@@ -74,20 +74,21 @@ function gmWeb(printData, baseData, path = 'print', method = 'post') {
 		let url = `//${printData.store?.e_invoice_serve_ip}.grandmall.me:9119/${ path }`;
 		let printer_url = printData.store?.e_invoice_machine_ip;
 
-		axios({
+		let obj = {
 			method: method,
-			url: url,
-			data: new URLSearchParams({
-				ip: printer_url,
-				port: 9100,
-				s: baseData,
-			}),
-			timeout: 3000,
 			headers: {
-				'Content-Type': 'application/x-www-form-urlencoded',
-				'X-Requested-With': undefined,
+					'Content-Type': 'application/x-www-form-urlencoded'
 			},
-		})
+			body: new URLSearchParams({
+					ip: printer_url,
+					port: 9100,
+					s: baseData
+			})
+		};
+
+		console.log(url, obj);
+
+		fetch(url, obj)
 		.then(function (response) {
 			if ( response.data?.code == 0 ) {
 				resolve('列印成功');
