@@ -34,7 +34,7 @@ const props = defineProps({
     readBtn: { type: Boolean, default: true },
     editBtn: { type: Boolean, default: true },
     deleteBtn: { type: Boolean, default: true },
-    maxHeight: { type: Number, default: 500 },
+    maxHeight: { type: Number, default: 700 },
     searchBar: { type: Boolean, default: true },
     rowClassName: { type: [Function, String] },
     defaultExpandAll: { type: Boolean, default: false },
