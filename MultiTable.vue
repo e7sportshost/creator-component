@@ -62,14 +62,19 @@ const add = () => {
   emit('add');
 }
 
+const getIndex = (index) => {
+  return ((state.page - 1) * state.rows) + index; //當頁總數 - (每頁數量 - 當前索引)
+}
+
 const remove = (index) => {
+  index = getIndex(index);
   if (props.data) {
       props.data.splice(index, 1);
   }
 }
 
 const moveUp = (index) => {
-  index = ((state.page - 1) * state.rows) + index; //當頁總數 - (每頁數量 - 當前索引)
+  index = getIndex(index);
   if (props.data && index > 0) {
     let rows = [props.data[index], props.data[index - 1]];
     props.data?.splice(index - 1, 2, rows[0], rows[1]);
@@ -77,7 +82,7 @@ const moveUp = (index) => {
 }
 
 const moveDown = (index) => {
-  index = ((state.page - 1) * state.rows) + index;
+  index = getIndex(index);
   if (props.data && index < (props.data.length - 1)) {
     let rows = [props.data[index], props.data[index+1]];
     props.data?.splice(index, 2, rows[1], rows[0]);
