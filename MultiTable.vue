@@ -24,7 +24,7 @@ const props = defineProps({
   pageSize: { type: Number, default: 5 },
   pageSizes: { type: Array, default: [5, 10, 15, 30] },
   rowClassName: { type: Function, default: () => {} },
-  audits: { type: String, default: true },
+  audits: { type: String, default: 'link' },
 })
 
 const state = reactive({
