@@ -50,6 +50,8 @@ const search = () => {
         });
     }, 50)
 
+    console.log('filters.obj', filters.obj.table_id);
+
     Request.get(route(`${ prefix }.${ routeNameData.value }.index`, filters.obj)).then(response => {
         data.value = response.data.data;
         search_data.value = response.data.search_data;
@@ -72,7 +74,9 @@ const reset = () => {
 watch(() => props.modelValue, (newValue) => {
   auditVisible.value = newValue;
   if(auditVisible.value){
-    search();
+    setTimeout(() => {
+        search();
+    }, 50)
   }
 })
 
