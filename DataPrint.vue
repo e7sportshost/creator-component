@@ -12,7 +12,8 @@ const printIframe = ref(null)
 //等待列印頁載入
 const onIframeLoad = () => {
     const iframe = printIframe.value;
-    if (iframe && iframe.contentWindow) {
+    if (iframe && iframe.contentWindow && !window.isPrint) {
+        window.isPrint = true;
         window.addEventListener('message', function(event) {
             if (event.data === 'vue-rendered') {
               // Vue 已经完全渲染，触发打印
