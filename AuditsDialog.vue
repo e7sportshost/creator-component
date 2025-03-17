@@ -50,8 +50,6 @@ const search = () => {
         });
     }, 50)
 
-    console.log('filters.obj', filters.obj.table_id);
-
     Request.get(route(`${ prefix }.${ routeNameData.value }.index`, filters.obj)).then(response => {
         data.value = response.data.data;
         search_data.value = response.data.search_data;

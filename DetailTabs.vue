@@ -1,5 +1,5 @@
 <script setup>
-import { ref, reactive } from "vue";
+import { ref, reactive, computed } from "vue";
 import { Link, usePage, useForm } from '@inertiajs/vue3'
 import { ElInput, ElButton, ElDialog, ElTableColumn, ElLoading } from 'element-plus';
 import AuditsButton from '@/Components/AuditsButton.vue';
@@ -21,11 +21,20 @@ const props = defineProps({
         type: Array,
         default: [],
     },
-    audit: { type: Boolean, default: true },
+    audit: {
+        type: Boolean,
+        default: true
+    },
+    routeNameData: {
+        type: String,
+        default: '',  // 先设为空字符串，后续 computed 处理默认值
+    }
 });
 
 const page = usePage();
 const prefix = page.props.prefix || 'backend';
+
+const routeName = computed(() => props.routeNameData || props.table);
 </script>
 
 <template>
@@ -45,8 +54,8 @@ const prefix = page.props.prefix || 'backend';
             <li class="mr-2">
                 <Link
                     :href="table_id ?
-                    (route().has(`${ prefix }.${ table }.edit`, table_id) ? route(`${ prefix }.${ table }.edit`, table_id) : '#') :
-                    (route().has(`${ prefix }.${ table }.create`) ? route(`${ prefix }.${ table }.create`) : '#' )"
+                    (route().has(`${ prefix }.${ routeName }.edit`, table_id) ? route(`${ prefix }.${ routeName }.edit`, table_id) : '#') :
+                    (route().has(`${ prefix }.${ routeName }.create`) ? route(`${ prefix }.${ routeName }.create`) : '#' )"
                     :class="[
                     action === 'basic_data' ? 'text-blue-600 dark:text-gray-200 border-blue-600 dark:border-gray-200': 'dark:text-gray-500 dark:border-gray-500'
                 ]" class="inline-block p-4 border-b-2 rounded-t-lg active hover:text-blue-600 hover:border-blue-600 dark:hover:text-gray-200 dark:hover:border-gray-200">{{ $page.props.langs.basic_data }}</Link>
