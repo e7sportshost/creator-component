@@ -109,6 +109,7 @@ watch(auditVisible, (newValue) => {
                     <p v-for="(item, index) in auditing" :key="item">{{ item }}</p>
                 </template>
             </el-table-column>
+            <el-table-column :label="langs.ip_address" sortable="custom" prop="ip_address" />
             <el-table-column :label="langs.updated_at" sortable="custom" prop="updated_at" />
         </DataTable>
     </div>
