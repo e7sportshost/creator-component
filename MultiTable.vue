@@ -1,5 +1,5 @@
 <script setup>
-import { ref, reactive } from 'vue'
+import { ref, reactive, computed } from 'vue'
 import { usePage, Link } from '@inertiajs/vue3'
 import { ArrowUpCircleIcon, ArrowDownCircleIcon, TrashIcon } from '@heroicons/vue/24/outline'
 import { ElInput, ElTable, ElTableColumn, ElPagination, ElDatePicker, ElCheckbox, ElSwitch } from 'element-plus';
@@ -48,13 +48,10 @@ const getNestedValue = (obj, key) => {
   }, obj);
 }
 
-const tableData = () => {
-  let data = props.data.filter((item, index) => {
-    return index >= (state.page - 1) * state.rows && index < state.page * state.rows
-  })
+const tableData = computed(() => {
+  return props.data.slice((state.page - 1) * state.rows, state.page * state.rows);
+});
 
-  return data
-}
 
 const add = () => {
   state.page = 1;
@@ -115,7 +112,7 @@ const onSort = (value) => {
 const getRowKey = (row) => {
     if (!row.id) {
       // 生成一个 32 位的随机唯一值
-      return `${Date.now()}-${Math.random()}`;
+      row.id = `${Date.now()}-${Math.random()}`;
     }
     return row.id;
 }
@@ -137,7 +134,7 @@ const showDialog = (id) => {
   <el-table
     ref="multiTable"
     class="MultiTable"
-    :data="tableData()"
+    :data="tableData"
     @sort-change="onSort"
     border
     highlight-current-row
