@@ -113,6 +113,10 @@ const onSort = (value) => {
 }
 
 const getRowKey = (row) => {
+    if (!row.id) {
+      // 生成一个 32 位的随机唯一值
+      return `${Date.now()}-${Math.random()}`;
+    }
     return row.id;
 }
 
