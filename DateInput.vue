@@ -112,8 +112,8 @@ const visibleChange = (value) => {
       :default-time="type.indexOf('range') > -1 ? defaultTime : new Date(2000, 1, 1, 0, 0, 0)"
       @change="emitUpdate"
       :range-separator="rangeSeparator"
-      :start-placeholder="startPlaceholder"
-      :end-placeholder="endPlaceholder"
+      :start-placeholder="startPlaceholder || langs.start_date"
+      :end-placeholder="endPlaceholder || langs.start_date"
       :disabled-date="disabledDate"
       :shortcuts="shortcuts.map(item => {
         item.text = langs[item.text] || item.text;
