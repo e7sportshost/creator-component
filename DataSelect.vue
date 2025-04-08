@@ -21,7 +21,7 @@ const props = defineProps({
     placeholder: { type: String, default: 'Select' },
     size: { type: String, default: '' },
     valueOnClear: { type: String, default: null },
-    maxCollapseTags: { type: Number, default: 1 },
+    maxCollapseTags: { type: Number, default: 3 },
 })
 
 const page = usePage();
