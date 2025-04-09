@@ -204,8 +204,8 @@ defineExpose({
         <el-button :icon="Search" class="ml-4" size="large" @click="searchData" type="primary">
             <div class="hidden sm:block sm:m-0">{{ langs.search }}</div>
         </el-button>
-        <Create v-if="createBtn" />
         <slot name="add_btn" />
+        <Create v-if="createBtn" />
     </div>
 
     <template v-if="advanced">
