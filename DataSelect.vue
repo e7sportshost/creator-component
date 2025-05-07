@@ -48,11 +48,11 @@ const loadAjaxData = async (query, cache = false) => {
     }
 
     if(props.multiple){
-        if (!ajaxData.value.some(option => dataValue.value.includes(option.id))) {
+        if (!ajaxData.value.some(option => dataValue.value.includes(option[props.option_value]))) {
             dataValue.value = [];
         }
     }else{
-        if (!ajaxData.value.some(option => option.id === dataValue.value)) {
+        if (!ajaxData.value.some(option => option[props.option_value] === dataValue.value)) {
             dataValue.value = null;
         }
     }
