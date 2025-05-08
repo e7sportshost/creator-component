@@ -62,7 +62,9 @@ const setData = (checkPage) => {
     }
     if(props.history){
         if(!checkPage || (checkPage && page.props.query.page)){
-            localStorage.setItem(table_key, JSON.stringify(props.filters.obj));
+            let obj = Object.assign({}, props.filters.obj);
+            delete obj.manual;
+            localStorage.setItem(table_key, JSON.stringify(obj));
         }
     }else{
         localStorage.removeItem(table_key);
