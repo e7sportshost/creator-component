@@ -22,6 +22,7 @@ const props = defineProps({
     size: { type: String, default: '' },
     valueOnClear: { type: String, default: null },
     maxCollapseTags: { type: Number, default: 3 },
+    search: { type: Boolean, default: false },
 })
 
 const page = usePage();
@@ -47,8 +48,10 @@ const loadAjaxData = async (query, cache = false) => {
         }
     }
 
+    //不在資料裡面 清空
     if(props.multiple){
-        if (!ajaxData.value.some(option => dataValue.value.includes(option[props.option_value]))) {
+        //如果是 搜尋 就不清空
+        if (!props.search && !ajaxData.value.some(option => dataValue.value.includes(option[props.option_value]))) {
             dataValue.value = [];
         }
     }else{
