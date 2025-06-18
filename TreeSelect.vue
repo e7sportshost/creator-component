@@ -57,6 +57,7 @@ const changeData = (value) => {
 <template>
   <ElTreeSelect
     v-model="dataValue"
+    filterable
     :data="ajaxData"
     :placeholder="placeholder"
     :props="{ value: option_value, label: option_label }"
